@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14161a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Zerio Zalik — Rogue 7 / Fighter 1</title>
+<style>
+:root{
+  --bg:#14161a; --panel:#1c1f26; --panel2:#232733; --line:#333846;
+  --ink:#e8eaf0; --dim:#9aa3b5; --accent:#7cc4ff; --good:#5fd08a; --bad:#ff6b6b;
+  --warn:#ffc857;
+}
+html[data-theme="light"]{
+  --bg:#f3f4f7; --panel:#ffffff; --panel2:#eceef3; --line:#d3d7e0;
+  --ink:#171a20; --dim:#5d6675; --accent:#1d6fb8; --good:#1f8a4c; --bad:#c0392b;
+  --warn:#9a6b00;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  padding-bottom:env(safe-area-inset-bottom);}
+header{position:sticky;top:0;z-index:30;background:var(--panel);
+  border-bottom:1px solid var(--line);padding:8px 12px calc(8px);}
+.hrow{display:flex;align-items:center;gap:8px}
+.nm{font-weight:700;font-size:16px;letter-spacing:.2px}
+.cls{font-size:11px;color:var(--dim);letter-spacing:.3px}
+.spacer{flex:1}
+.ibtn{background:var(--panel2);border:1px solid var(--line);color:var(--ink);
+  border-radius:9px;padding:7px 10px;font-size:13px;font-weight:600}
+/* HP */
+.hpwrap{margin-top:8px;display:flex;align-items:center;gap:8px}
+.hpbar{flex:1;height:26px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:8px;overflow:hidden;position:relative}
+.hpfill{height:100%;background:var(--good);transition:width .18s}
+.hptxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;letter-spacing:.3px;text-shadow:0 1px 2px rgba(0,0,0,.55)}
+.hpbtn{width:42px;height:42px;border-radius:11px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--ink);font-size:20px;font-weight:700;flex:none}
+.hpbtn:active{background:var(--accent);color:#06121c}
+.amt{width:54px;height:42px;border-radius:11px;border:1px solid var(--line);
+  background:var(--bg);color:var(--ink);text-align:center;font-size:16px;font-weight:700;flex:none}
+/* tabs */
+nav{display:flex;background:var(--panel);border-bottom:1px solid var(--line);
+  position:sticky;top:var(--htop,0);z-index:25;overflow-x:auto}
+nav button{flex:1;min-width:88px;background:none;border:none;color:var(--dim);
+  padding:11px 6px;font-size:13px;font-weight:700;letter-spacing:.4px;border-bottom:2.5px solid transparent}
+nav button.on{color:var(--accent);border-bottom-color:var(--accent)}
+main{padding:12px 12px 60px}
+section{display:none} section.on{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  margin-bottom:11px;overflow:hidden}
+.ct{background:var(--panel2);padding:7px 11px;font-size:11px;font-weight:800;
+  letter-spacing:1.1px;text-transform:uppercase;color:var(--dim);
+  display:flex;align-items:center;gap:8px}
+.cb{padding:9px 11px}
+/* pips */
+.trk{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--line)}
+.trk:last-child{border-bottom:none}
+.tl{font-size:13px;font-weight:700;width:96px;flex:none}
+.tl small{display:block;font-weight:400;color:var(--dim);font-size:10.5px}
+.pips{display:flex;flex-wrap:wrap;gap:7px}
+.pip{width:27px;height:27px;border-radius:50%;border:2px solid var(--line);
+  background:transparent;transition:background .12s}
+.pip.f{background:var(--accent);border-color:var(--accent)}
+.pip.gold.f{background:var(--warn);border-color:var(--warn)}
+.pip.grn.f{background:var(--good);border-color:var(--good)}
+/* rows */
+.r{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.r:last-child{border-bottom:none}
+.r .k{color:var(--dim);font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.5px;width:74px;flex:none;padding-top:2px}
+.r .v{flex:1}
+.num{margin-left:auto;font-weight:800;font-variant-numeric:tabular-nums}
+.min{color:var(--dim);font-size:11.5px;width:34px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
+/* abilities */
+.abg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.ab{background:var(--panel2);border:1px solid var(--line);border-radius:10px;
+  text-align:center;padding:7px 2px}
+.ab .an{font-size:9.5px;color:var(--dim);letter-spacing:.7px;font-weight:700}
+.ab .am{font-size:21px;font-weight:800;line-height:1.15}
+.ab .as{font-size:11px;color:var(--dim);border-top:1px solid var(--line);
+  margin:3px 10px 0;padding-top:2px}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:11px}
+.sc{background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  text-align:center;padding:8px 2px}
+.sc .v{font-size:18px;font-weight:800}
+.sc .l{font-size:9px;color:var(--dim);letter-spacing:.5px;font-weight:700;text-transform:uppercase}
+/* attacks */
+.atk{width:100%;border-collapse:collapse;font-size:12.5px}
+.atk th{font-size:9.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;
+  text-align:left;padding:3px 4px;border-bottom:1px solid var(--line);font-weight:800}
+.atk td{padding:7px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.atk tr:last-child td{border-bottom:none}
+.atk .w{font-weight:700}
+.atk .rg{color:var(--dim);font-size:11px;white-space:nowrap}
+.mstr{color:var(--accent);font-weight:700;font-size:11.5px}
+.ft{font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)}
+.ft:last-child{border-bottom:none}
+.ft b{display:block;font-size:12.5px;letter-spacing:.2px;margin-bottom:1px}
+.note{width:100%;min-height:130px;background:var(--bg);color:var(--ink);
+  border:1px solid var(--line);border-radius:9px;padding:9px;font-size:14px;font-family:inherit;resize:vertical}
+.warn{color:var(--warn);font-size:11.5px;padding:6px 11px}
+.dim{color:var(--dim)}
+.rest{display:flex;gap:8px;margin-bottom:11px}
+.rest button{flex:1;padding:12px 6px;border-radius:11px;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);font-size:13.5px;font-weight:800}
+.rest button:active{background:var(--panel2)}
+</style>
+</head>
+<body>
+
+<header id="hd">
+  <div class="hrow">
+    <div>
+      <div class="nm">Zerio Zalik</div>
+      <div class="cls">HALFLING · ROGUE (SOULKNIFE) 7 / FIGHTER 1 · LVL 8 · PROF +3</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="ibtn" id="theme">◐</button>
+  </div>
+  <div class="hpwrap">
+    <button class="hpbtn" id="minus">−</button>
+    <input class="amt" id="amt" type="number" inputmode="numeric" value="5">
+    <button class="hpbtn" id="plus">+</button>
+    <div class="hpbar"><div class="hpfill" id="fill"></div><div class="hptxt" id="hptxt"></div></div>
+  </div>
+</header>
+
+<nav>
+  <button class="on" data-t="play">PLAY</button>
+  <button data-t="stats">STATS</button>
+  <button data-t="feats">FEATURES</button>
+  <button data-t="gear">GEAR</button>
+</nav>
+
+<main>
+
+<!-- ============ PLAY ============ -->
+<section class="on" id="play">
+
+  <div class="sg">
+    <div class="sc"><div class="v">16</div><div class="l">AC</div></div>
+    <div class="sc"><div class="v">+4</div><div class="l">Init</div></div>
+    <div class="sc"><div class="v">30</div><div class="l">Speed</div></div>
+    <div class="sc"><div class="v">17</div><div class="l">Pass Per</div></div>
+  </div>
+
+  <div class="rest">
+    <button id="short">SHORT REST</button>
+    <button id="long">LONG REST</button>
+  </div>
+
+  <div class="card">
+    <div class="ct">Temp HP<span class="spacer"></span><span class="dim" id="thpv">0</span></div>
+    <div class="cb rl">
+      <button class="ibtn" data-thp="-1">−1</button>
+      <button class="ibtn" data-thp="1">+1</button>
+      <button class="ibtn" data-thp="5">+5</button>
+      <button class="ibtn" data-thp="0">Clear</button>
+      <span class="dim" style="font-size:11.5px">Temp HP absorbs damage first.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Resources</div>
+    <div class="cb">
+      <div class="trk"><div class="tl">Energy Dice<small>6 × d8 · long rest</small></div><div class="pips" id="p_energy"></div></div>
+      <div class="trk"><div class="tl">Luck Points<small>3 · long rest</small></div><div class="pips" id="p_luck"></div></div>
+      <div class="trk"><div class="tl">Second Wind<small>1d10+1 · short rest</small></div><div class="pips" id="p_wind"></div></div>
+      <div class="trk"><div class="tl">Hit Dice d8<small>rogue</small></div><div class="pips" id="p_hd8"></div></div>
+      <div class="trk"><div class="tl">Hit Dice d10<small>fighter</small></div><div class="pips" id="p_hd10"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Death Saves</div>
+    <div class="cb">
+      <div class="trk"><div class="tl">Successes</div><div class="pips" id="p_ds"></div></div>
+      <div class="trk"><div class="tl">Failures</div><div class="pips" id="p_df"></div></div>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <div class="ct">Attacks · +2 dmg on thrown hits</div>
+    <div class="cb" style="padding:4px 11px 9px">
+      <table class="atk"><thead><tr>
+        <th>Weapon</th><th>Atk</th><th>Damage</th><th>Range</th><th>Mastery</th>
+      </tr></thead><tbody id="atks"></tbody></table>
+      <div class="dim" style="font-size:11px;margin-top:7px">
+        Sneak Attack 4d6 — once per turn, Finesse or Ranged, with Advantage or an ally within 5 ft.
+        Heavy is no penalty: Dex 18 clears the 13 threshold.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Cunning Strike · Save DC 15</div>
+    <div class="cb">
+      <div class="ft"><b>Poison — 1d6</b>Con save or Poisoned 1 min, repeating the save at the end of each of its turns. Needs a Poisoner's Kit.</div>
+      <div class="ft"><b>Trip — 1d6</b>Large or smaller: Dex save or Prone. Sets up Advantage for your next attack.</div>
+      <div class="ft"><b>Withdraw — 1d6</b>Move up to half your Speed without provoking Opportunity Attacks.</div>
+      <div class="ft dim" style="font-size:12px">Spend Sneak Attack dice before rolling damage.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Turn Cheat Sheet</div>
+    <div class="cb">
+      <div class="r"><div class="k">Action</div><div class="v">Throw a Psychic Blade — 1d6+6 plus 4d6 Sneak Attack, magical, 60 ft</div></div>
+      <div class="r"><div class="k">Bonus</div><div class="v">Second Blade · Steady Aim · Cunning Action · Second Wind</div></div>
+      <div class="r"><div class="k">Reaction</div><div class="v">Opportunity Attack — may manifest a Psychic Blade for it</div></div>
+      <div class="r"><div class="k">Free</div><div class="v">Cunning Strike · Psi-Bolstered Knack · Luck Point · Halfling reroll of a 1</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Mastery Properties</div>
+    <div class="cb">
+      <div class="r"><div class="k">Vex</div><div class="v">Hit and damage → Advantage on your next attack against that creature before the end of your next turn.</div></div>
+      <div class="r"><div class="k">Nick</div><div class="v">The extra Light-weapon attack becomes part of the Attack action instead of a Bonus Action. 1/turn.</div></div>
+      <div class="r"><div class="k">Slow</div><div class="v">Hit and damage → target's Speed drops 10 ft until the start of your next turn.</div></div>
+      <div class="r"><div class="k">Push</div><div class="v">Hit and damage → push the target up to 10 ft straight away, if Large or smaller.</div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ STATS ============ -->
+<section id="stats">
+  <div class="card"><div class="ct">Abilities</div><div class="cb">
+    <div class="abg" id="abg"></div>
+  </div></div>
+
+  <div class="card"><div class="ct">Saving Throws</div><div class="cb" id="saves"></div></div>
+
+  <div class="card">
+    <div class="ct">Skills<span class="spacer"></span><span class="dim">BONUS / MIN</span></div>
+    <div class="cb" id="skills"></div>
+    <div class="warn">MIN is your Reliable Talent floor — you cannot roll lower.</div>
+  </div>
+
+  <div class="card"><div class="ct">Passive Scores</div><div class="cb">
+    <div class="r"><div class="v">Perception</div><div class="num">17</div></div>
+    <div class="r"><div class="v">Investigation</div><div class="num">14</div></div>
+    <div class="r"><div class="v">Insight</div><div class="num">14</div></div>
+  </div></div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section id="feats">
+  <div class="card"><div class="ct">Rogue — Level 7</div><div class="cb">
+    <div class="ft"><b>Reliable Talent</b>On any ability check using a skill or tool you're proficient with, treat a d20 roll of 9 or lower as a 10.</div>
+    <div class="ft"><b>Evasion</b>On a Dex save for half damage: no damage on a success, half on a failure. Not while Incapacitated.</div>
+    <div class="ft"><b>Sneak Attack 4d6</b>Once per turn with a Finesse or Ranged weapon, if you have Advantage, or an ally is within 5 ft of the target and you lack Disadvantage.</div>
+    <div class="ft"><b>Cunning Action</b>Bonus Action to Dash, Disengage or Hide.</div>
+    <div class="ft"><b>Steady Aim</b>Bonus Action for Advantage on your next attack this turn. Only if you haven't moved; Speed 0 afterwards.</div>
+    <div class="ft"><b>Expertise</b>Sleight of Hand, Acrobatics, Stealth, Perception.</div>
+    <div class="ft"><b>Weapon Mastery</b>Dagger, Light Crossbow. Swap on a Long Rest.</div>
+  </div></div>
+
+  <div class="card"><div class="ct">Soulknife</div><div class="cb">
+    <div class="ft"><b>Psychic Blades</b>Attack action or Opportunity Attack: manifest a blade in a free hand. Simple Melee, Finesse, Thrown 60/120, magical, 1d6 psychic, Mastery Vex (free — doesn't count against your two). Second blade as a Bonus Action for 1d4. Costs no Energy Dice.</div>
+    <div class="ft"><b>Psionic Power</b>Pool of 6 Energy Dice, each a d8. Regain all on a Long Rest.</div>
+    <div class="ft"><b>Psi-Bolstered Knack</b>When an attack roll or ability check fails, roll one Energy Die and add it. Expended only if the roll then succeeds.</div>
+    <div class="ft"><b>Psychic Whispers</b>Magic action. Choose up to 1 creature (Int mod); roll one Energy Die for that many hours of two-way telepathy at any range on your plane. First use after a Long Rest is free.</div>
+  </div></div>
+
+  <div class="card"><div class="ct">Fighter — Level 1</div><div class="cb">
+    <div class="ft"><b>Thrown Weapon Fighting</b>+2 damage on a ranged hit with a Thrown weapon — including Psychic Blades. Draw a Thrown weapon as part of the attack.</div>
+    <div class="ft"><b>Second Wind</b>Bonus Action to regain 1d10+1 HP. Two uses; one returns on a Short Rest.</div>
+    <div class="ft"><b>Weapon Mastery</b>Scimitar, Longbow, Heavy Crossbow. Swap on a Long Rest.</div>
+  </div></div>
+
+  <div class="card"><div class="ct">Halfling · Wayfarer</div><div class="cb">
+    <div class="ft"><b>Brave</b>Advantage on saves to avoid or end Frightened.</div>
+    <div class="ft"><b>Halfling Nimbleness</b>Move through the space of any larger creature; you can't stop there.</div>
+    <div class="ft"><b>Luck</b>Roll a 1 on a d20 test → reroll and use the new roll.</div>
+    <div class="ft"><b>Naturally Stealthy</b>Hide even when obscured only by a creature one size larger.</div>
+    <div class="ft"><b>Lucky (feat)</b>3 Luck Points. Spend 1 for Advantage on your own D20 Test, or Disadvantage on an attack against you.</div>
+  </div></div>
+</section>
+
+<!-- ============ GEAR ============ -->
+<section id="gear">
+  <div class="card"><div class="ct">Equipment</div><div class="cb">
+    <div class="r"><div class="k">Worn</div><div class="v">Studded Leather — AC 12 + Dex, no Stealth penalty</div></div>
+    <div class="r"><div class="k">Melee</div><div class="v">Scimitar · Dagger</div></div>
+    <div class="r"><div class="k">Ranged</div><div class="v">Longbow · Heavy Crossbow · Light Crossbow</div></div>
+    <div class="r"><div class="k">Ammo</div><div class="v">Arrows &amp; Quiver · Bolts &amp; Bolt Case</div></div>
+    <div class="r"><div class="k">Kit</div><div class="v">Thieves' Tools · Burglar's Pack</div></div>
+  </div></div>
+
+  <div class="card"><div class="ct">Proficiencies &amp; Languages</div><div class="cb">
+    <div class="r"><div class="k">Armor</div><div class="v">Light, Medium, Shields</div></div>
+    <div class="r"><div class="k">Weapons</div><div class="v">All Simple and Martial weapons</div></div>
+    <div class="r"><div class="k">Tools</div><div class="v">Thieves' Tools</div></div>
+    <div class="r"><div class="k">Langs</div><div class="v">Common · Halfling · Thieves' Cant · Undercommon · <span class="dim">(one slot open)</span></div></div>
+  </div></div>
+
+  <div class="card"><div class="ct">Burglar's Pack</div><div class="cb">
+    <div class="dim" style="font-size:12.5px">Backpack, Ball Bearings, Bell, 10 Candles, Crowbar, Hammer, 10 Pitons,
+    Hooded Lantern, 7 flasks of Oil, 10 days Rations, 50 ft Rope, Tinderbox, Waterskin.</div>
+  </div></div>
+
+  <div class="card"><div class="ct">Notes</div><div class="cb">
+    <textarea class="note" id="notes" placeholder="Gold, loot, quest notes, NPCs…"></textarea>
+  </div></div>
+
+  <div class="card"><div class="ct">Data</div><div class="cb">
+    <div class="rl">
+      <button class="ibtn" id="reset">Reset all tracking</button>
+      <span class="dim" id="stormsg" style="font-size:11.5px"></span>
+    </div>
+  </div></div>
+</section>
+
+</main>
+
+<script>
+(function(){
+"use strict";
+var KEY="zerio-zalik-v1";
+var MAXHP=60;
+var CAP={energy:6,luck:3,wind:2,hd8:7,hd10:1,ds:3,df:3};
+
+var D={hp:MAXHP,thp:0,energy:6,luck:3,wind:2,hd8:7,hd10:1,ds:0,df:0,notes:"",theme:"dark"};
+var canStore=true;
+
+function load(){
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw){var o=JSON.parse(raw);for(var k in D){if(o[k]!==undefined)D[k]=o[k];}}
+  }catch(e){canStore=false;}
+}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(D));}
+  catch(e){
+    canStore=false;
+    var m=document.getElementById("stormsg");
+    if(m)m.textContent="Storage unavailable — changes won't persist here.";
+  }
+}
+
+/* ---------- data ---------- */
+var ABIL=[["STR",8,-1],["DEX",18,4],["CON",14,2],["INT",13,1],["WIS",12,1],["CHA",12,1]];
+var SAVES=[["Strength",-1,0],["Dexterity",7,1],["Constitution",2,0],
+           ["Intelligence",4,1],["Wisdom",1,0],["Charisma",1,0]];
+var SKILLS=[["Acrobatics","Dex",10,20,2],["Insight","Wis",4,14,1],["Investigation","Int",4,14,1],
+            ["Perception","Wis",7,17,2],["Sleight of Hand","Dex",10,20,2],["Stealth","Dex",10,20,2],
+            ["Thieves' Tools","Dex",7,17,1]];
+/* name, atk, dmgDice, dmgBonus, dmgType, range, mastery */
+var ATK=[
+ ["Psychic Blade",7,[[1,6]],4,"psychic","Melee 5 ft","Vex"],
+ ["↳ thrown",7,[[1,6]],6,"psychic","60/120 ft","Vex"],
+ ["↳ 2nd blade (BA)",7,[[1,4]],4,"psychic","melee · thr +2","Vex"],
+ ["Dagger",7,[[1,4]],4,"piercing","Melee · 20/60","Nick"],
+ ["Scimitar",7,[[1,6]],4,"slashing","Melee 5 ft","Nick"],
+ ["Longbow",7,[[1,8]],4,"piercing","150/600 ft","Slow"],
+ ["Heavy Crossbow",7,[[1,10]],4,"piercing","100/400 ft","Push"],
+ ["Light Crossbow",7,[[1,8]],4,"piercing","80/320 ft","Slow"]
+];
+
+/* ---------- helpers ---------- */
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e;}
+function sgn(n){return (n>=0?"+":"")+n;}
+function die(f){return 1+Math.floor(Math.random()*f);}
+
+/* ---------- HP ---------- */
+function drawHP(){
+  var pct=Math.max(0,Math.min(100,D.hp/MAXHP*100));
+  var f=document.getElementById("fill");
+  f.style.width=pct+"%";
+  f.style.background = D.hp<=0 ? "var(--bad)" : (D.hp<=MAXHP*0.35 ? "var(--warn)" : "var(--good)");
+  document.getElementById("hptxt").textContent =
+    D.hp+" / "+MAXHP+(D.thp>0?"  (+"+D.thp+" temp)":"");
+  document.getElementById("thpv").textContent=D.thp;
+}
+function dmg(n){
+  if(D.thp>0){var a=Math.min(D.thp,n);D.thp-=a;n-=a;}
+  D.hp=Math.max(0,D.hp-n);save();drawHP();
+}
+function heal(n){D.hp=Math.min(MAXHP,D.hp+n);save();drawHP();}
+
+/* ---------- pips ---------- */
+function drawPips(id,key,cap,cls){
+  var box=document.getElementById(id);box.innerHTML="";
+  for(var i=0;i<cap;i++){
+    (function(i){
+      var b=el("button","pip"+(cls?" "+cls:"")+(i<D[key]?" f":""));
+      b.onclick=function(){
+        D[key] = (D[key]===i+1) ? i : i+1;
+        save();drawPips(id,key,cap,cls);
+      };
+      box.appendChild(b);
+    })(i);
+  }
+}
+function drawAll(){
+  drawPips("p_energy","energy",CAP.energy);
+  drawPips("p_luck","luck",CAP.luck,"gold");
+  drawPips("p_wind","wind",CAP.wind,"grn");
+  drawPips("p_hd8","hd8",CAP.hd8);
+  drawPips("p_hd10","hd10",CAP.hd10);
+  drawPips("p_ds","ds",CAP.ds,"grn");
+  drawPips("p_df","df",CAP.df);
+  drawHP();
+}
+
+
+/* ---------- build views ---------- */
+function build(){
+  var g=document.getElementById("abg");
+  ABIL.forEach(function(a){
+    var c=el("div","ab");
+    c.appendChild(el("div","an",a[0]));
+    c.appendChild(el("div","am",sgn(a[2])));
+    c.appendChild(el("div","as",String(a[1])));
+    g.appendChild(c);
+  });
+
+  var sv=document.getElementById("saves");
+  SAVES.forEach(function(s){
+    var r=el("div","r");
+    r.appendChild(el("div","v",(s[2]?"● ":"○ ")+s[0]));
+    r.appendChild(el("div","num",sgn(s[1])));
+    sv.appendChild(r);
+  });
+
+  var sk=document.getElementById("skills");
+  SKILLS.forEach(function(s){
+    var r=el("div","r");
+    r.appendChild(el("div","v",(s[4]===2?"◉ ":"● ")+s[0]+" "+'('+s[1]+')'));
+    r.appendChild(el("div","num",sgn(s[2])));
+    r.appendChild(el("div","min",String(s[3])));
+    sk.appendChild(r);
+  });
+
+  var tb=document.getElementById("atks");
+  ATK.forEach(function(a){
+    var tr=el("tr");
+    tr.appendChild(el("td","w",a[0]));
+    tr.appendChild(el("td",null,sgn(a[1])));
+    var dd=a[2].map(function(x){return x[0]+"d"+x[1];}).join("+")+sgn(a[3]);
+    tr.appendChild(el("td",null,dd));
+    tr.appendChild(el("td","rg",a[5]));
+    tr.appendChild(el("td","mstr",a[6]));
+    tb.appendChild(tr);
+  });
+}
+
+/* ---------- wire up ---------- */
+function init(){
+  load();build();drawAll();
+  document.documentElement.setAttribute("data-theme",D.theme==="light"?"light":"dark");
+  document.getElementById("notes").value=D.notes||"";
+  if(!canStore)document.getElementById("stormsg").textContent="Storage unavailable — changes won't persist here.";
+
+  function amt(){var v=parseInt(document.getElementById("amt").value,10);return isNaN(v)||v<0?0:v;}
+  document.getElementById("minus").onclick=function(){dmg(amt());};
+  document.getElementById("plus").onclick=function(){heal(amt());};
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-thp]"),function(b){
+    b.onclick=function(){
+      var v=parseInt(b.getAttribute("data-thp"),10);
+      D.thp = v===0 ? 0 : Math.max(0,D.thp+v);
+      save();drawHP();
+    };
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(b){
+    b.onclick=function(){
+      Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(x){x.classList.remove("on");});
+      Array.prototype.forEach.call(document.querySelectorAll("section"),function(x){x.classList.remove("on");});
+      b.classList.add("on");
+      document.getElementById(b.getAttribute("data-t")).classList.add("on");
+      window.scrollTo(0,0);
+    };
+  });
+
+
+  document.getElementById("short").onclick=function(){
+    D.wind=Math.min(CAP.wind,D.wind+1);
+    save();drawAll();
+  };
+  document.getElementById("long").onclick=function(){
+    D.hp=MAXHP;D.thp=0;D.energy=CAP.energy;D.luck=CAP.luck;D.wind=CAP.wind;D.ds=0;D.df=0;
+    var regain=4; /* half of 8 total Hit Dice */
+    while(regain>0&&(D.hd8<CAP.hd8||D.hd10<CAP.hd10)){
+      if(D.hd8<CAP.hd8){D.hd8++;regain--;}
+      else if(D.hd10<CAP.hd10){D.hd10++;regain--;}
+    }
+    save();drawAll();
+  };
+
+  var nt=document.getElementById("notes");
+  nt.oninput=function(){D.notes=nt.value;save();};
+
+  document.getElementById("theme").onclick=function(){
+    D.theme=(D.theme==="light")?"dark":"light";
+    document.documentElement.setAttribute("data-theme",D.theme);
+    save();
+  };
+
+  document.getElementById("reset").onclick=function(){
+    if(!confirm("Reset HP, resources and notes?"))return;
+    D.hp=MAXHP;D.thp=0;D.energy=CAP.energy;D.luck=CAP.luck;D.wind=CAP.wind;
+    D.hd8=CAP.hd8;D.hd10=CAP.hd10;D.ds=0;D.df=0;D.notes="";
+    document.getElementById("notes").value="";
+    save();drawAll();
+  };
+
+  function stick(){
+    var h=document.getElementById("hd").offsetHeight;
+    document.documentElement.style.setProperty("--htop",h+"px");
+  }
+  stick();window.addEventListener("resize",stick);
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+})();
+</script>
+</body>
+</html>
