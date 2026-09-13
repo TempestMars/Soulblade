@@ -43,6 +43,29 @@ header{position:sticky;top:0;z-index:30;background:var(--panel);
 .hpbtn:active{background:var(--accent);color:#06121c}
 .amt{width:54px;height:42px;border-radius:11px;border:1px solid var(--line);
   background:var(--bg);color:var(--ink);text-align:center;font-size:16px;font-weight:700;flex:none}
+.hpbig{text-align:center;font-weight:800;font-size:40px;line-height:1.1;letter-spacing:-1px;
+  font-variant-numeric:tabular-nums;padding:4px 0 2px}
+.hpbig .mx{font-size:20px;color:var(--dim);font-weight:700;margin-left:4px}
+.tbadge{display:block;font-size:13px;color:var(--warn);font-weight:700;letter-spacing:.3px;min-height:17px}
+.hprow{display:flex;gap:8px;margin:9px 0 8px}
+.bigbtn{flex:1;height:54px;border-radius:12px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--ink);font-size:14px;font-weight:800;letter-spacing:.5px}
+.bigbtn.dm{color:var(--bad)} .bigbtn.hl{color:var(--good)}
+.bigbtn.dm:active{background:var(--bad);color:#fff}
+.bigbtn.hl:active{background:var(--good);color:#04210f}
+.amt2{width:76px;height:54px;flex:none;border-radius:12px;border:1px solid var(--line);
+  background:var(--bg);color:var(--ink);text-align:center;font-size:22px;font-weight:800;
+  font-family:inherit;-moz-appearance:textfield}
+.amt2::-webkit-outer-spin-button,.amt2::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chips button{flex:1;min-width:46px;padding:9px 2px;border-radius:9px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--ink);font-size:13px;font-weight:700}
+.chips button:active{background:var(--accent);color:#06121c}
+.setrow{display:flex;gap:7px;align-items:center;padding-top:8px;border-top:1px solid var(--line)}
+.setrow label{font-size:11px;font-weight:800;color:var(--dim);text-transform:uppercase;
+  letter-spacing:.5px;width:92px;flex:none}
+.setrow input{flex:1;min-width:0;height:38px;border-radius:9px;border:1px solid var(--line);
+  background:var(--bg);color:var(--ink);text-align:center;font-size:15px;font-weight:700;font-family:inherit}
 /* tabs */
 nav{display:flex;background:var(--panel);border-bottom:1px solid var(--line);
   position:sticky;top:var(--htop,0);z-index:25;overflow-x:auto}
@@ -101,6 +124,26 @@ section{display:none} section.on{display:block}
 .ft{font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)}
 .ft:last-child{border-bottom:none}
 .ft b{display:block;font-size:12.5px;letter-spacing:.2px;margin-bottom:1px}
+.itm{padding:9px 0;border-bottom:1px solid var(--line)}
+.itm:last-child{border-bottom:none}
+.itm .ih{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+.itm .ih b{font-size:13.5px}
+.tag{font-size:10px;color:var(--dim);font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.idsc{font-size:12.5px;margin:2px 0 6px}
+.tog2{background:var(--panel2);border:1px solid var(--line);color:var(--dim);
+  border-radius:8px;padding:6px 12px;font-size:12px;font-weight:800;letter-spacing:.4px}
+.tog2.on{background:var(--accent);border-color:var(--accent);color:#06121c}
+.cnt{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line)}
+.cnt:last-child{border-bottom:none}
+.cn{flex:1;font-size:13px;font-weight:700}
+.cn small{display:block;font-weight:400;color:var(--dim);font-size:11px}
+.cbtn{width:34px;height:34px;flex:none;border-radius:9px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--ink);font-size:17px;font-weight:800}
+.cbtn:active{background:var(--accent);color:#06121c}
+.cv{width:26px;text-align:center;font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
+.gold{display:flex;align-items:center;gap:8px}
+.gold input{flex:1;min-width:0;height:40px;border-radius:9px;border:1px solid var(--line);
+  background:var(--bg);color:var(--ink);text-align:center;font-size:17px;font-weight:800;font-family:inherit}
 .note{width:100%;min-height:130px;background:var(--bg);color:var(--ink);
   border:1px solid var(--line);border-radius:9px;padding:9px;font-size:14px;font-family:inherit;resize:vertical}
 .warn{color:var(--warn);font-size:11.5px;padding:6px 11px}
@@ -123,9 +166,6 @@ section{display:none} section.on{display:block}
     <button class="ibtn" id="theme">◐</button>
   </div>
   <div class="hpwrap">
-    <button class="hpbtn" id="minus">−</button>
-    <input class="amt" id="amt" type="number" inputmode="numeric" value="5">
-    <button class="hpbtn" id="plus">+</button>
     <div class="hpbar"><div class="hpfill" id="fill"></div><div class="hptxt" id="hptxt"></div></div>
   </div>
 </header>
@@ -142,6 +182,34 @@ section{display:none} section.on{display:block}
 <!-- ============ PLAY ============ -->
 <section class="on" id="play">
 
+  <div class="card">
+    <div class="ct">Hit Points</div>
+    <div class="cb">
+      <div class="hpbig"><span id="hpnow">60</span><span class="mx">/ 60</span></div>
+      <div class="tbadge" id="tbadge"></div>
+      <div class="hprow">
+        <button class="bigbtn dm" id="minus">− DAMAGE</button>
+        <input class="amt2" id="amt" type="number" inputmode="numeric" value="5">
+        <button class="bigbtn hl" id="plus">+ HEAL</button>
+      </div>
+      <div class="chips">
+        <button data-q="-1">−1</button><button data-q="-5">−5</button><button data-q="-10">−10</button>
+        <button data-q="1">+1</button><button data-q="5">+5</button><button data-q="10">+10</button>
+      </div>
+      <div class="setrow">
+        <label>Set HP</label>
+        <input id="sethp" type="number" inputmode="numeric" placeholder="60">
+        <button class="ibtn" id="sethpb">Set</button>
+      </div>
+      <div class="setrow">
+        <label>Temp HP</label>
+        <input id="settmp" type="number" inputmode="numeric" placeholder="0">
+        <button class="ibtn" id="settmpb">Set</button>
+        <button class="ibtn" id="cleartmp">Clear</button>
+      </div>
+    </div>
+  </div>
+
   <div class="sg">
     <div class="sc"><div class="v">16</div><div class="l">AC</div></div>
     <div class="sc"><div class="v">+4</div><div class="l">Init</div></div>
@@ -154,16 +222,6 @@ section{display:none} section.on{display:block}
     <button id="long">LONG REST</button>
   </div>
 
-  <div class="card">
-    <div class="ct">Temp HP<span class="spacer"></span><span class="dim" id="thpv">0</span></div>
-    <div class="cb rl">
-      <button class="ibtn" data-thp="-1">−1</button>
-      <button class="ibtn" data-thp="1">+1</button>
-      <button class="ibtn" data-thp="5">+5</button>
-      <button class="ibtn" data-thp="0">Clear</button>
-      <span class="dim" style="font-size:11.5px">Temp HP absorbs damage first.</span>
-    </div>
-  </div>
 
   <div class="card">
     <div class="ct">Resources</div>
@@ -287,6 +345,41 @@ section{display:none} section.on{display:block}
 
 <!-- ============ GEAR ============ -->
 <section id="gear">
+  <div class="card">
+    <div class="ct">Magic Items<span class="spacer"></span><span class="dim" id="attn"></span></div>
+    <div class="cb">
+      <div class="itm">
+        <div class="ih"><b>Bracers of Defense</b><span class="tag">Rare · Attunement</span></div>
+        <div class="idsc">+2 AC while wearing <b>no armor and no shield</b>. You understand and speak Elvish while wearing them.</div>
+        <button class="tog2" data-att="brac">Attune</button>
+      </div>
+      <div class="itm">
+        <div class="ih"><b>Stone of Good Luck</b><span class="tag">Uncommon · Attunement</span></div>
+        <div class="idsc">+1 to all ability checks and saving throws while on your person. Attuning here adds the +1 to the Stats tab.</div>
+        <button class="tog2" data-att="luck">Attune</button>
+      </div>
+      <div class="itm">
+        <div class="ih"><b>Gorig's "Spellbook"</b><span class="tag">Adventuring Gear</span></div>
+        <div class="idsc">Maroon silk body wraps, 23 ft, 20 lb. Works as a wizard's spellbook: acid splash, fear, blindness/deafness, false life, fire bolt, haste, magic missile, mirror image, ray of enfeeblement, ray of frost, ray of sickness, shield, shocking grasp.</div>
+      </div>
+      <div class="itm">
+        <div class="ih"><b>Indebted to Verthandantalynx</b><span class="tag">Story Award</span></div>
+        <div class="idsc">You owe a favour to the ancient green dragon Verthandantalynx. She will call it in at the worst possible moment.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card"><div class="ct">Consumables</div><div class="cb" id="cons"></div></div>
+
+  <div class="card"><div class="ct">Gold</div><div class="cb">
+    <div class="gold">
+      <button class="cbtn" data-g="-10">−</button>
+      <input id="gold" type="number" inputmode="numeric">
+      <button class="cbtn" data-g="10">+</button>
+      <span class="dim" style="font-size:12px">gp</span>
+    </div>
+  </div></div>
+
   <div class="card"><div class="ct">Equipment</div><div class="cb">
     <div class="r"><div class="k">Worn</div><div class="v">Studded Leather — AC 12 + Dex, no Stealth penalty</div></div>
     <div class="r"><div class="k">Melee</div><div class="v">Scimitar · Dagger</div></div>
@@ -313,7 +406,7 @@ section{display:none} section.on{display:block}
 
   <div class="card"><div class="ct">Data</div><div class="cb">
     <div class="rl">
-      <button class="ibtn" id="reset">Reset all tracking</button>
+      <button class="ibtn" id="reset">Reset HP &amp; resources</button>
       <span class="dim" id="stormsg" style="font-size:11.5px"></span>
     </div>
   </div></div>
@@ -328,13 +421,26 @@ var KEY="zerio-zalik-v1";
 var MAXHP=60;
 var CAP={energy:6,luck:3,wind:2,hd8:7,hd10:1,ds:3,df:3};
 
-var D={hp:MAXHP,thp:0,energy:6,luck:3,wind:2,hd8:7,hd10:1,ds:0,df:0,notes:"",theme:"dark"};
+var CONS=[["greater","Potion of Healing (Greater)","4d4+4 HP · uncommon"],
+          ["healing","Potion of Healing","2d4+2 HP · common"],
+          ["poisonres","Potion of Resistance (Poison)","Resistance to poison damage, 1 hr"],
+          ["heroism","Potion of Heroism","10 temp HP + Bless, 1 hr · rare"],
+          ["scroll","Spell Scroll: Find Familiar","Level 1 · common"]];
+var D={hp:MAXHP,thp:0,energy:6,luck:3,wind:2,hd8:7,hd10:1,ds:0,df:0,notes:"",theme:"dark",
+       gold:650, att:{brac:false,luck:false},
+       pot:{greater:1,healing:1,poisonres:1,heroism:1,scroll:1}};
 var canStore=true;
 
 function load(){
   try{
     var raw=localStorage.getItem(KEY);
-    if(raw){var o=JSON.parse(raw);for(var k in D){if(o[k]!==undefined)D[k]=o[k];}}
+    if(raw){var o=JSON.parse(raw);
+      for(var k in D){
+        if(o[k]===undefined)continue;
+        if(D[k]&&typeof D[k]==="object"&&!Array.isArray(D[k])){
+          for(var j in D[k]){if(o[k][j]!==undefined)D[k][j]=o[k][j];}
+        } else D[k]=o[k];
+      }}
   }catch(e){canStore=false;}
 }
 function save(){
@@ -378,7 +484,8 @@ function drawHP(){
   f.style.background = D.hp<=0 ? "var(--bad)" : (D.hp<=MAXHP*0.35 ? "var(--warn)" : "var(--good)");
   document.getElementById("hptxt").textContent =
     D.hp+" / "+MAXHP+(D.thp>0?"  (+"+D.thp+" temp)":"");
-  document.getElementById("thpv").textContent=D.thp;
+  document.getElementById("hpnow").textContent=D.hp;
+  document.getElementById("tbadge").textContent = D.thp>0 ? ("+"+D.thp+" temp HP") : "";
 }
 function dmg(n){
   if(D.thp>0){var a=Math.min(D.thp,n);D.thp-=a;n-=a;}
@@ -400,7 +507,31 @@ function drawPips(id,key,cap,cls){
     })(i);
   }
 }
+function drawAtt(){
+  var n=(D.att.brac?1:0)+(D.att.luck?1:0);
+  document.getElementById("attn").textContent=n+" / 3 attuned";
+  Array.prototype.forEach.call(document.querySelectorAll("[data-att]"),function(b){
+    var on=!!D.att[b.getAttribute("data-att")];
+    b.classList.toggle("on",on);
+    b.textContent=on?"ATTUNED":"Attune";
+  });
+}
+function drawCons(){
+  var box=document.getElementById("cons");box.innerHTML="";
+  CONS.forEach(function(c){
+    var row=el("div","cnt");
+    var nm=el("div","cn");nm.appendChild(document.createTextNode(c[1]));
+    nm.appendChild(el("small",null,c[2]));row.appendChild(nm);
+    var m=el("button","cbtn","−"), v=el("div","cv",String(D.pot[c[0]])), p=el("button","cbtn","+");
+    m.onclick=function(){D.pot[c[0]]=Math.max(0,D.pot[c[0]]-1);save();drawCons();};
+    p.onclick=function(){D.pot[c[0]]=Math.min(99,D.pot[c[0]]+1);save();drawCons();};
+    row.appendChild(m);row.appendChild(v);row.appendChild(p);
+    if(D.pot[c[0]]===0)row.style.opacity=".42";
+    box.appendChild(row);
+  });
+}
 function drawAll(){
+  drawAtt();drawCons();
   drawPips("p_energy","energy",CAP.energy);
   drawPips("p_luck","luck",CAP.luck,"gold");
   drawPips("p_wind","wind",CAP.wind,"grn");
@@ -423,24 +554,32 @@ function build(){
     g.appendChild(c);
   });
 
-  var sv=document.getElementById("saves");
+  drawSaves();drawSkills();drawAtks();
+}
+function bonusAdj(){return D.att.luck?1:0;}
+function drawSaves(){
+  var adj=bonusAdj();
+  var sv=document.getElementById("saves");sv.innerHTML="";
   SAVES.forEach(function(s){
     var r=el("div","r");
     r.appendChild(el("div","v",(s[2]?"● ":"○ ")+s[0]));
-    r.appendChild(el("div","num",sgn(s[1])));
+    r.appendChild(el("div","num",sgn(s[1]+adj)));
     sv.appendChild(r);
   });
-
-  var sk=document.getElementById("skills");
+}
+function drawSkills(){
+  var adj=bonusAdj();
+  var sk=document.getElementById("skills");sk.innerHTML="";
   SKILLS.forEach(function(s){
     var r=el("div","r");
     r.appendChild(el("div","v",(s[4]===2?"◉ ":"● ")+s[0]+" "+'('+s[1]+')'));
-    r.appendChild(el("div","num",sgn(s[2])));
-    r.appendChild(el("div","min",String(s[3])));
+    r.appendChild(el("div","num",sgn(s[2]+adj)));
+    r.appendChild(el("div","min",String(s[3]+adj)));
     sk.appendChild(r);
   });
-
-  var tb=document.getElementById("atks");
+}
+function drawAtks(){
+  var tb=document.getElementById("atks");if(tb.innerHTML)return;
   ATK.forEach(function(a){
     var tr=el("tr");
     tr.appendChild(el("td","w",a[0]));
@@ -464,13 +603,24 @@ function init(){
   document.getElementById("minus").onclick=function(){dmg(amt());};
   document.getElementById("plus").onclick=function(){heal(amt());};
 
-  Array.prototype.forEach.call(document.querySelectorAll("[data-thp]"),function(b){
+  Array.prototype.forEach.call(document.querySelectorAll("[data-q]"),function(b){
     b.onclick=function(){
-      var v=parseInt(b.getAttribute("data-thp"),10);
-      D.thp = v===0 ? 0 : Math.max(0,D.thp+v);
-      save();drawHP();
+      var v=parseInt(b.getAttribute("data-q"),10);
+      if(v<0)dmg(-v); else heal(v);
     };
   });
+
+  document.getElementById("sethpb").onclick=function(){
+    var f=document.getElementById("sethp"),v=parseInt(f.value,10);
+    if(!isNaN(v)){D.hp=Math.max(0,Math.min(MAXHP,v));save();drawHP();}
+    f.value="";f.blur();
+  };
+  document.getElementById("settmpb").onclick=function(){
+    var f=document.getElementById("settmp"),v=parseInt(f.value,10);
+    if(!isNaN(v)){D.thp=Math.max(0,v);save();drawHP();}
+    f.value="";f.blur();
+  };
+  document.getElementById("cleartmp").onclick=function(){D.thp=0;save();drawHP();};
 
   Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(b){
     b.onclick=function(){
@@ -497,6 +647,25 @@ function init(){
     save();drawAll();
   };
 
+  Array.prototype.forEach.call(document.querySelectorAll("[data-att]"),function(b){
+    b.onclick=function(){
+      var k=b.getAttribute("data-att");
+      var n=(D.att.brac?1:0)+(D.att.luck?1:0);
+      if(!D.att[k]&&n>=3){alert("You can attune to at most 3 items.");return;}
+      D.att[k]=!D.att[k];save();drawAtt();drawSaves();drawSkills();
+    };
+  });
+
+  var gf=document.getElementById("gold");
+  gf.value=D.gold;
+  gf.oninput=function(){var v=parseInt(gf.value,10);D.gold=isNaN(v)?0:Math.max(0,v);save();};
+  Array.prototype.forEach.call(document.querySelectorAll("[data-g]"),function(b){
+    b.onclick=function(){
+      D.gold=Math.max(0,D.gold+parseInt(b.getAttribute("data-g"),10));
+      document.getElementById("gold").value=D.gold;save();
+    };
+  });
+
   var nt=document.getElementById("notes");
   nt.oninput=function(){D.notes=nt.value;save();};
 
@@ -507,10 +676,9 @@ function init(){
   };
 
   document.getElementById("reset").onclick=function(){
-    if(!confirm("Reset HP, resources and notes?"))return;
+    if(!confirm("Reset HP and resources? Loot, gold and notes are kept."))return;
     D.hp=MAXHP;D.thp=0;D.energy=CAP.energy;D.luck=CAP.luck;D.wind=CAP.wind;
-    D.hd8=CAP.hd8;D.hd10=CAP.hd10;D.ds=0;D.df=0;D.notes="";
-    document.getElementById("notes").value="";
+    D.hd8=CAP.hd8;D.hd10=CAP.hd10;D.ds=0;D.df=0;
     save();drawAll();
   };
 
