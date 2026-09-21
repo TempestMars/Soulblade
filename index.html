@@ -7,46 +7,56 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Zerio Zalik — Rogue 7 / Fighter 1</title>
+<title>Saskia — Barbarian 9 / Druid 3</title>
 <style>
 :root{
   --bg:#14161a; --panel:#1c1f26; --panel2:#232733; --line:#333846;
   --ink:#e8eaf0; --dim:#9aa3b5; --accent:#7cc4ff; --good:#5fd08a; --bad:#ff6b6b;
-  --warn:#ffc857;
+  --warn:#ffc857; --rage:#ff7a45;
 }
 html[data-theme="light"]{
   --bg:#f3f4f7; --panel:#ffffff; --panel2:#eceef3; --line:#d3d7e0;
   --ink:#171a20; --dim:#5d6675; --accent:#1d6fb8; --good:#1f8a4c; --bad:#c0392b;
-  --warn:#9a6b00;
+  --warn:#9a6b00; --rage:#c2410c;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--ink);
   font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   padding-bottom:env(safe-area-inset-bottom);}
+body.raging{--accent:var(--rage)}
 header{position:sticky;top:0;z-index:30;background:var(--panel);
-  border-bottom:1px solid var(--line);padding:8px 12px calc(8px);}
+  border-bottom:1px solid var(--line);padding:8px 12px;}
+body.raging header{border-bottom:2px solid var(--rage)}
 .hrow{display:flex;align-items:center;gap:8px}
 .nm{font-weight:700;font-size:16px;letter-spacing:.2px}
-.cls{font-size:11px;color:var(--dim);letter-spacing:.3px}
+.cls{font-size:10.5px;color:var(--dim);letter-spacing:.3px}
 .spacer{flex:1}
 .ibtn{background:var(--panel2);border:1px solid var(--line);color:var(--ink);
   border-radius:9px;padding:7px 10px;font-size:13px;font-weight:600}
-/* HP */
-.hpwrap{margin-top:8px;display:flex;align-items:center;gap:8px}
-.hpbar{flex:1;height:26px;background:var(--panel2);border:1px solid var(--line);
+.hpwrap{margin-top:8px}
+.hpbar{height:24px;background:var(--panel2);border:1px solid var(--line);
   border-radius:8px;overflow:hidden;position:relative}
 .hpfill{height:100%;background:var(--good);transition:width .18s}
 .hptxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:13px;letter-spacing:.3px;text-shadow:0 1px 2px rgba(0,0,0,.55)}
-.hpbtn{width:42px;height:42px;border-radius:11px;border:1px solid var(--line);
-  background:var(--panel2);color:var(--ink);font-size:20px;font-weight:700;flex:none}
-.hpbtn:active{background:var(--accent);color:#06121c}
-.amt{width:54px;height:42px;border-radius:11px;border:1px solid var(--line);
-  background:var(--bg);color:var(--ink);text-align:center;font-size:16px;font-weight:700;flex:none}
+  font-weight:700;font-size:12.5px;letter-spacing:.3px;text-shadow:0 1px 2px rgba(0,0,0,.55)}
+nav{display:flex;background:var(--panel);border-bottom:1px solid var(--line);
+  position:sticky;top:var(--htop,0);z-index:25;overflow-x:auto}
+nav button{flex:1;min-width:76px;background:none;border:none;color:var(--dim);
+  padding:11px 6px;font-size:12.5px;font-weight:700;letter-spacing:.4px;border-bottom:2.5px solid transparent;white-space:nowrap}
+nav button.on{color:var(--accent);border-bottom-color:var(--accent)}
+main{padding:12px 12px 60px}
+section{display:none} section.on{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  margin-bottom:11px;overflow:hidden}
+.ct{background:var(--panel2);padding:7px 11px;font-size:11px;font-weight:800;
+  letter-spacing:1.1px;text-transform:uppercase;color:var(--dim);
+  display:flex;align-items:center;gap:8px}
+.cb{padding:9px 11px}
+/* HP */
 .hpbig{text-align:center;font-weight:800;font-size:40px;line-height:1.1;letter-spacing:-1px;
   font-variant-numeric:tabular-nums;padding:4px 0 2px}
 .hpbig .mx{font-size:20px;color:var(--dim);font-weight:700;margin-left:4px}
-.tbadge{display:block;font-size:13px;color:var(--warn);font-weight:700;letter-spacing:.3px;min-height:17px}
+.tbadge{display:block;text-align:center;font-size:13px;color:var(--warn);font-weight:700;min-height:17px}
 .hprow{display:flex;gap:8px;margin:9px 0 8px}
 .bigbtn{flex:1;height:54px;border-radius:12px;border:1px solid var(--line);
   background:var(--panel2);color:var(--ink);font-size:14px;font-weight:800;letter-spacing:.5px}
@@ -63,23 +73,9 @@ header{position:sticky;top:0;z-index:30;background:var(--panel);
 .chips button:active{background:var(--accent);color:#06121c}
 .setrow{display:flex;gap:7px;align-items:center;padding-top:8px;border-top:1px solid var(--line)}
 .setrow label{font-size:11px;font-weight:800;color:var(--dim);text-transform:uppercase;
-  letter-spacing:.5px;width:92px;flex:none}
+  letter-spacing:.5px;width:86px;flex:none}
 .setrow input{flex:1;min-width:0;height:38px;border-radius:9px;border:1px solid var(--line);
   background:var(--bg);color:var(--ink);text-align:center;font-size:15px;font-weight:700;font-family:inherit}
-/* tabs */
-nav{display:flex;background:var(--panel);border-bottom:1px solid var(--line);
-  position:sticky;top:var(--htop,0);z-index:25;overflow-x:auto}
-nav button{flex:1;min-width:88px;background:none;border:none;color:var(--dim);
-  padding:11px 6px;font-size:13px;font-weight:700;letter-spacing:.4px;border-bottom:2.5px solid transparent}
-nav button.on{color:var(--accent);border-bottom-color:var(--accent)}
-main{padding:12px 12px 60px}
-section{display:none} section.on{display:block}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
-  margin-bottom:11px;overflow:hidden}
-.ct{background:var(--panel2);padding:7px 11px;font-size:11px;font-weight:800;
-  letter-spacing:1.1px;text-transform:uppercase;color:var(--dim);
-  display:flex;align-items:center;gap:8px}
-.cb{padding:9px 11px}
 /* pips */
 .trk{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--line)}
 .trk:last-child{border-bottom:none}
@@ -91,14 +87,15 @@ section{display:none} section.on{display:block}
 .pip.f{background:var(--accent);border-color:var(--accent)}
 .pip.gold.f{background:var(--warn);border-color:var(--warn)}
 .pip.grn.f{background:var(--good);border-color:var(--good)}
+.pip.org.f{background:var(--rage);border-color:var(--rage)}
 /* rows */
 .r{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px}
 .r:last-child{border-bottom:none}
 .r .k{color:var(--dim);font-size:11px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.5px;width:74px;flex:none;padding-top:2px}
+  letter-spacing:.5px;width:78px;flex:none;padding-top:2px}
 .r .v{flex:1}
 .num{margin-left:auto;font-weight:800;font-variant-numeric:tabular-nums}
-.min{color:var(--dim);font-size:11.5px;width:34px;text-align:right;flex:none;font-variant-numeric:tabular-nums}
+.src{color:var(--dim);font-size:10.5px;width:66px;text-align:right;flex:none}
 /* abilities */
 .abg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .ab{background:var(--panel2);border:1px solid var(--line);border-radius:10px;
@@ -113,45 +110,56 @@ section{display:none} section.on{display:block}
 .sc .v{font-size:18px;font-weight:800}
 .sc .l{font-size:9px;color:var(--dim);letter-spacing:.5px;font-weight:700;text-transform:uppercase}
 /* attacks */
-.atk{width:100%;border-collapse:collapse;font-size:12.5px}
+.atk{width:100%;border-collapse:collapse;font-size:12.5px;table-layout:fixed}
 .atk th{font-size:9.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;
   text-align:left;padding:3px 4px;border-bottom:1px solid var(--line);font-weight:800}
-.atk td{padding:7px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.atk td{padding:7px 4px;border-bottom:1px solid var(--line);vertical-align:top;word-wrap:break-word}
 .atk tr:last-child td{border-bottom:none}
 .atk .w{font-weight:700}
-.atk .rg{color:var(--dim);font-size:11px;white-space:nowrap}
-.mstr{color:var(--accent);font-weight:700;font-size:11.5px}
+.dmg{font-weight:800}
+body.raging .dmg{color:var(--rage)}
+.mstr{color:var(--accent);font-weight:700;font-size:11px}
+/* toggles */
+.tog2{background:var(--panel2);border:1px solid var(--line);color:var(--dim);
+  border-radius:8px;padding:7px 13px;font-size:12.5px;font-weight:800;letter-spacing:.4px}
+.tog2.on{background:var(--accent);border-color:var(--accent);color:#06121c}
+.ragebtn{width:100%;padding:14px;border-radius:12px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--ink);font-size:15px;font-weight:800;letter-spacing:1px}
+.ragebtn.on{background:var(--rage);border-color:var(--rage);color:#1a0800}
+.rl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+/* features / spells */
 .ft{font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)}
 .ft:last-child{border-bottom:none}
 .ft b{display:block;font-size:12.5px;letter-spacing:.2px;margin-bottom:1px}
-.itm{padding:9px 0;border-bottom:1px solid var(--line)}
-.itm:last-child{border-bottom:none}
-.itm .ih{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
-.itm .ih b{font-size:13.5px}
-.tag{font-size:10px;color:var(--dim);font-weight:700;letter-spacing:.4px;text-transform:uppercase}
-.idsc{font-size:12.5px;margin:2px 0 6px}
-.tog2{background:var(--panel2);border:1px solid var(--line);color:var(--dim);
-  border-radius:8px;padding:6px 12px;font-size:12px;font-weight:800;letter-spacing:.4px}
-.tog2.on{background:var(--accent);border-color:var(--accent);color:#06121c}
-.cnt{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line)}
-.cnt:last-child{border-bottom:none}
-.cn{flex:1;font-size:13px;font-weight:700}
-.cn small{display:block;font-weight:400;color:var(--dim);font-size:11px}
-.cbtn{width:34px;height:34px;flex:none;border-radius:9px;border:1px solid var(--line);
-  background:var(--panel2);color:var(--ink);font-size:17px;font-weight:800}
-.cbtn:active{background:var(--accent);color:#06121c}
-.cv{width:26px;text-align:center;font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
-.gold{display:flex;align-items:center;gap:8px}
-.gold input{flex:1;min-width:0;height:40px;border-radius:9px;border:1px solid var(--line);
-  background:var(--bg);color:var(--ink);text-align:center;font-size:17px;font-weight:800;font-family:inherit}
-.note{width:100%;min-height:130px;background:var(--bg);color:var(--ink);
+.ft .meta{color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.3px;margin-bottom:2px}
+.conc{color:var(--warn);font-weight:800;font-size:10.5px;letter-spacing:.4px}
+/* stat blocks */
+.sb .nmm{font-size:15px;font-weight:800}
+.sb .ty{color:var(--dim);font-size:11.5px;font-style:italic;margin-bottom:6px}
+.sbg{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:7px 0}
+.sbg div{background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  text-align:center;padding:5px 1px;font-size:11px}
+.sbg b{display:block;font-size:14px}
+.sbl{font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--line)}
+.sbl:last-child{border-bottom:none}
+.sbl .kk{color:var(--dim);font-weight:800;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px}
+.note{width:100%;min-height:120px;background:var(--bg);color:var(--ink);
   border:1px solid var(--line);border-radius:9px;padding:9px;font-size:14px;font-family:inherit;resize:vertical}
-.warn{color:var(--warn);font-size:11.5px;padding:6px 11px}
+.warnbox{border:1px solid var(--line);border-left:4px solid var(--warn);background:var(--panel2);
+  border-radius:9px;padding:9px 11px;margin-bottom:11px;font-size:12.5px}
+.warnbox b{display:block;font-size:11px;letter-spacing:.7px;text-transform:uppercase;color:var(--warn);margin-bottom:3px}
 .dim{color:var(--dim)}
 .rest{display:flex;gap:8px;margin-bottom:11px}
 .rest button{flex:1;padding:12px 6px;border-radius:11px;border:1px solid var(--line);
   background:var(--panel);color:var(--ink);font-size:13.5px;font-weight:800}
 .rest button:active{background:var(--panel2)}
+.gold{display:flex;align-items:center;gap:8px}
+.gold input{flex:1;min-width:0;height:40px;border-radius:9px;border:1px solid var(--line);
+  background:var(--bg);color:var(--ink);text-align:center;font-size:17px;font-weight:800;font-family:inherit}
+.cbtn{width:34px;height:34px;flex:none;border-radius:9px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--ink);font-size:17px;font-weight:800}
+.concin{flex:1;min-width:0;height:38px;border-radius:9px;border:1px solid var(--line);
+  background:var(--bg);color:var(--ink);padding:0 10px;font-size:14px;font-family:inherit}
 </style>
 </head>
 <body>
@@ -159,8 +167,8 @@ section{display:none} section.on{display:block}
 <header id="hd">
   <div class="hrow">
     <div>
-      <div class="nm">Zerio Zalik</div>
-      <div class="cls">HALFLING · ROGUE (SOULKNIFE) 7 / FIGHTER 1 · LVL 8 · PROF +3</div>
+      <div class="nm">Saskia <span id="ragetag" class="dim" style="font-size:11px"></span></div>
+      <div class="cls">AARAKOCRA · BARBARIAN (WORLD TREE) 9 / DRUID (MOON) 3 · LVL 12 · PROF +4</div>
     </div>
     <div class="spacer"></div>
     <button class="ibtn" id="theme">◐</button>
@@ -173,8 +181,9 @@ section{display:none} section.on{display:block}
 <nav>
   <button class="on" data-t="play">PLAY</button>
   <button data-t="stats">STATS</button>
-  <button data-t="feats">FEATURES</button>
   <button data-t="gear">GEAR</button>
+  <button data-t="spells">SPELLS</button>
+  <button data-t="forms">FORMS</button>
 </nav>
 
 <main>
@@ -185,7 +194,7 @@ section{display:none} section.on{display:block}
   <div class="card">
     <div class="ct">Hit Points</div>
     <div class="cb">
-      <div class="hpbig"><span id="hpnow">60</span><span class="mx">/ 60</span></div>
+      <div class="hpbig"><span id="hpnow">131</span><span class="mx">/ 131</span></div>
       <div class="tbadge" id="tbadge"></div>
       <div class="hprow">
         <button class="bigbtn dm" id="minus">− DAMAGE</button>
@@ -198,7 +207,7 @@ section{display:none} section.on{display:block}
       </div>
       <div class="setrow">
         <label>Set HP</label>
-        <input id="sethp" type="number" inputmode="numeric" placeholder="60">
+        <input id="sethp" type="number" inputmode="numeric" placeholder="131">
         <button class="ibtn" id="sethpb">Set</button>
       </div>
       <div class="setrow">
@@ -207,14 +216,34 @@ section{display:none} section.on{display:block}
         <button class="ibtn" id="settmpb">Set</button>
         <button class="ibtn" id="cleartmp">Clear</button>
       </div>
+      <div class="setrow" style="border-top:none;padding-top:6px">
+        <span class="dim" style="font-size:11.5px">Temp HP never stack — Rage 9 · Wild Shape 9 · Chef treat 4. Keep the largest.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Rage</div>
+    <div class="cb">
+      <button class="ragebtn" id="ragebtn">ENTER RAGE</button>
+      <div class="dim" style="font-size:11.5px;margin-top:7px" id="ragehint"></div>
     </div>
   </div>
 
   <div class="sg">
-    <div class="sc"><div class="v">16</div><div class="l">AC</div></div>
-    <div class="sc"><div class="v">+4</div><div class="l">Init</div></div>
-    <div class="sc"><div class="v">30</div><div class="l">Speed</div></div>
-    <div class="sc"><div class="v">17</div><div class="l">Pass Per</div></div>
+    <div class="sc"><div class="v" id="acv">17</div><div class="l">AC</div></div>
+    <div class="sc"><div class="v">+4</div><div class="l">Init adv</div></div>
+    <div class="sc"><div class="v">40</div><div class="l">Walk/Fly</div></div>
+    <div class="sc"><div class="v">16</div><div class="l">Pass Per</div></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Armor Class</div>
+    <div class="cb rl">
+      <button class="tog2" id="shieldb">Shield +1</button>
+      <button class="tog2" id="barkb">Barkskin</button>
+      <span class="dim" style="font-size:11.5px">Base 14 · shield 17 · Barkskin sets 17</span>
+    </div>
   </div>
 
   <div class="rest">
@@ -222,15 +251,25 @@ section{display:none} section.on{display:block}
     <button id="long">LONG REST</button>
   </div>
 
+  <div class="card">
+    <div class="ct">Concentration</div>
+    <div class="cb rl">
+      <input class="concin" id="conc" placeholder="not concentrating">
+      <button class="ibtn" id="concclr">Drop</button>
+    </div>
+  </div>
 
   <div class="card">
     <div class="ct">Resources</div>
     <div class="cb">
-      <div class="trk"><div class="tl">Energy Dice<small>6 × d8 · long rest</small></div><div class="pips" id="p_energy"></div></div>
-      <div class="trk"><div class="tl">Luck Points<small>3 · long rest</small></div><div class="pips" id="p_luck"></div></div>
-      <div class="trk"><div class="tl">Second Wind<small>1d10+1 · short rest</small></div><div class="pips" id="p_wind"></div></div>
-      <div class="trk"><div class="tl">Hit Dice d8<small>rogue</small></div><div class="pips" id="p_hd8"></div></div>
-      <div class="trk"><div class="tl">Hit Dice d10<small>fighter</small></div><div class="pips" id="p_hd10"></div></div>
+      <div class="trk"><div class="tl">Rage<small>4 · 1 on short rest</small></div><div class="pips" id="p_rage"></div></div>
+      <div class="trk"><div class="tl">Wild Shape<small>2 · 1 on short rest</small></div><div class="pips" id="p_ws"></div></div>
+      <div class="trk"><div class="tl">Spell 1st<small>long rest</small></div><div class="pips" id="p_sl1"></div></div>
+      <div class="trk"><div class="tl">Spell 2nd<small>long rest</small></div><div class="pips" id="p_sl2"></div></div>
+      <div class="trk"><div class="tl">Chef treats<small>4 temp HP each</small></div><div class="pips" id="p_treat"></div></div>
+      <div class="trk"><div class="tl">Gust of Wind<small>free use · long rest</small></div><div class="pips" id="p_gust"></div></div>
+      <div class="trk"><div class="tl">Hit Dice d12<small>barbarian</small></div><div class="pips" id="p_hd12"></div></div>
+      <div class="trk"><div class="tl">Hit Dice d8<small>druid</small></div><div class="pips" id="p_hd8"></div></div>
     </div>
   </div>
 
@@ -242,47 +281,42 @@ section{display:none} section.on{display:block}
     </div>
   </div>
 
-
   <div class="card">
-    <div class="ct">Attacks · +2 dmg on thrown hits</div>
+    <div class="ct">Attacks · +8 to hit<span class="spacer"></span><span class="dim" id="atkmode"></span></div>
     <div class="cb" style="padding:4px 11px 9px">
       <table class="atk"><thead><tr>
-        <th>Weapon</th><th>Atk</th><th>Damage</th><th>Range</th><th>Mastery</th>
+        <th style="width:30%">Weapon</th><th style="width:28%">Damage</th><th>Notes</th>
       </tr></thead><tbody id="atks"></tbody></table>
-      <div class="dim" style="font-size:11px;margin-top:7px">
-        Sneak Attack 4d6 — once per turn, Finesse or Ranged, with Advantage or an ally within 5 ft.
-        Heavy is no penalty: Dex 18 clears the 13 threshold.
-      </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="ct">Cunning Strike · Save DC 15</div>
+    <div class="ct">Masteries &amp; Brutal Strike</div>
     <div class="cb">
-      <div class="ft"><b>Poison — 1d6</b>Con save or Poisoned 1 min, repeating the save at the end of each of its turns. Needs a Poisoner's Kit.</div>
-      <div class="ft"><b>Trip — 1d6</b>Large or smaller: Dex save or Prone. Sets up Advantage for your next attack.</div>
-      <div class="ft"><b>Withdraw — 1d6</b>Move up to half your Speed without provoking Opportunity Attacks.</div>
-      <div class="ft dim" style="font-size:12px">Spend Sneak Attack dice before rolling damage.</div>
+      <div class="r"><div class="k">Topple</div><div class="v">Trident — Con save <b>DC 16</b> or Prone.</div></div>
+      <div class="r"><div class="k">Sap</div><div class="v">Flail — target has Disadvantage on its next attack roll.</div></div>
+      <div class="r"><div class="k">Graze</div><div class="v">Greatsword — on a miss, still deal <b>4</b> damage.</div></div>
+      <div class="r"><div class="k">Brutal</div><div class="v">1/turn: give up Reckless advantage on one attack → <b>+1d10</b> plus push 15 ft or −15 ft Speed.</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">World Tree</div>
+    <div class="cb">
+      <div class="ft"><b>Vitality Surge</b>Gain <b>9 temporary HP</b> when you enter your Rage.</div>
+      <div class="ft"><b>Life-Giving Force</b>Start of each of your turns while raging: one creature within 10 ft gains <b>3d6 temp HP</b>. Free, no action.</div>
+      <div class="ft"><b>Branches of the Tree — Reaction</b>While raging, when a creature you can see starts its turn within 30 ft: Str save <b>DC 16</b> or it teleports to a space within 5 ft of you. You may then drop its Speed to <b>0</b> for that turn.</div>
     </div>
   </div>
 
   <div class="card">
     <div class="ct">Turn Cheat Sheet</div>
     <div class="cb">
-      <div class="r"><div class="k">Action</div><div class="v">Throw a Psychic Blade — 1d6+6 plus 4d6 Sneak Attack, magical, 60 ft</div></div>
-      <div class="r"><div class="k">Bonus</div><div class="v">Second Blade · Steady Aim · Cunning Action · Second Wind</div></div>
-      <div class="r"><div class="k">Reaction</div><div class="v">Opportunity Attack — may manifest a Psychic Blade for it</div></div>
-      <div class="r"><div class="k">Free</div><div class="v">Cunning Strike · Psi-Bolstered Knack · Luck Point · Halfling reroll of a 1</div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="ct">Mastery Properties</div>
-    <div class="cb">
-      <div class="r"><div class="k">Vex</div><div class="v">Hit and damage → Advantage on your next attack against that creature before the end of your next turn.</div></div>
-      <div class="r"><div class="k">Nick</div><div class="v">The extra Light-weapon attack becomes part of the Attack action instead of a Bonus Action. 1/turn.</div></div>
-      <div class="r"><div class="k">Slow</div><div class="v">Hit and damage → target's Speed drops 10 ft until the start of your next turn.</div></div>
-      <div class="r"><div class="k">Push</div><div class="v">Hit and damage → push the target up to 10 ft straight away, if Large or smaller.</div></div>
+      <div class="r"><div class="k">Before</div><div class="v">Barkskin (1 hr, survives Rage) · Aid · Pass without Trace · Chef treats</div></div>
+      <div class="r"><div class="k">Bonus</div><div class="v">Enter Rage (+9 temp, move half Speed) · keep Rage going · Wild Shape · eat a treat</div></div>
+      <div class="r"><div class="k">Action</div><div class="v">Two attacks — Reckless for Advantage, one may be a Brutal Strike</div></div>
+      <div class="r"><div class="k">Reaction</div><div class="v">Branches of the Tree — yank an enemy to you and pin it</div></div>
+      <div class="r"><div class="k">Free</div><div class="v">Life-Giving Force — 3d6 temp HP to an ally within 10 ft</div></div>
     </div>
   </div>
 
@@ -290,56 +324,40 @@ section{display:none} section.on{display:block}
 
 <!-- ============ STATS ============ -->
 <section id="stats">
-  <div class="card"><div class="ct">Abilities</div><div class="cb">
-    <div class="abg" id="abg"></div>
-  </div></div>
+  <div class="card"><div class="ct">Abilities</div><div class="cb"><div class="abg" id="abg"></div></div></div>
 
-  <div class="card"><div class="ct">Saving Throws</div><div class="cb" id="saves"></div></div>
+  <div class="card"><div class="ct">Saving Throws</div><div class="cb" id="saves"></div>
+    <div class="cb" style="padding-top:0"><span class="dim" style="font-size:11.5px">
+      <b>Danger Sense:</b> Advantage on Dex saves against effects you can see. <b>Rage:</b> Advantage on Str checks and saves.</span></div>
+  </div>
 
-  <div class="card">
-    <div class="ct">Skills<span class="spacer"></span><span class="dim">BONUS / MIN</span></div>
-    <div class="cb" id="skills"></div>
-    <div class="warn">MIN is your Reliable Talent floor — you cannot roll lower.</div>
+  <div class="card"><div class="ct">Skills</div><div class="cb" id="skills"></div>
+    <div class="cb" style="padding-top:0"><span class="dim" style="font-size:11.5px">
+      <b>Primal Knowledge:</b> while raging you may use <b>Strength</b> for Acrobatics, Intimidation, Perception, Stealth and Survival — Perception becomes <b>+8</b>.</span></div>
   </div>
 
   <div class="card"><div class="ct">Passive Scores</div><div class="cb">
-    <div class="r"><div class="v">Perception</div><div class="num">17</div></div>
-    <div class="r"><div class="v">Investigation</div><div class="num">14</div></div>
-    <div class="r"><div class="v">Insight</div><div class="num">14</div></div>
-  </div></div>
-</section>
-
-<!-- ============ FEATURES ============ -->
-<section id="feats">
-  <div class="card"><div class="ct">Rogue — Level 7</div><div class="cb">
-    <div class="ft"><b>Reliable Talent</b>On any ability check using a skill or tool you're proficient with, treat a d20 roll of 9 or lower as a 10.</div>
-    <div class="ft"><b>Evasion</b>On a Dex save for half damage: no damage on a success, half on a failure. Not while Incapacitated.</div>
-    <div class="ft"><b>Sneak Attack 4d6</b>Once per turn with a Finesse or Ranged weapon, if you have Advantage, or an ally is within 5 ft of the target and you lack Disadvantage.</div>
-    <div class="ft"><b>Cunning Action</b>Bonus Action to Dash, Disengage or Hide.</div>
-    <div class="ft"><b>Steady Aim</b>Bonus Action for Advantage on your next attack this turn. Only if you haven't moved; Speed 0 afterwards.</div>
-    <div class="ft"><b>Expertise</b>Sleight of Hand, Acrobatics, Stealth, Perception.</div>
-    <div class="ft"><b>Weapon Mastery</b>Dagger, Light Crossbow. Swap on a Long Rest.</div>
+    <div class="r"><div class="v">Perception</div><div class="num">16</div></div>
+    <div class="r"><div class="v">Insight</div><div class="num">12</div></div>
+    <div class="r"><div class="v">Investigation</div><div class="num">9</div></div>
   </div></div>
 
-  <div class="card"><div class="ct">Soulknife</div><div class="cb">
-    <div class="ft"><b>Psychic Blades</b>Attack action or Opportunity Attack: manifest a blade in a free hand. Simple Melee, Finesse, Thrown 60/120, magical, 1d6 psychic, Mastery Vex (free — doesn't count against your two). Second blade as a Bonus Action for 1d4. Costs no Energy Dice.</div>
-    <div class="ft"><b>Psionic Power</b>Pool of 6 Energy Dice, each a d8. Regain all on a Long Rest.</div>
-    <div class="ft"><b>Psi-Bolstered Knack</b>When an attack roll or ability check fails, roll one Energy Die and add it. Expended only if the roll then succeeds.</div>
-    <div class="ft"><b>Psychic Whispers</b>Magic action. Choose up to 1 creature (Int mod); roll one Energy Die for that many hours of two-way telepathy at any range on your plane. First use after a Long Rest is free.</div>
+  <div class="card"><div class="ct">Barbarian Features</div><div class="cb">
+    <div class="ft"><b>Unarmored Defense</b>AC = 10 + Dex + Con. A shield still adds.</div>
+    <div class="ft"><b>Reckless Attack</b>Advantage on your Str attacks this turn; attacks against you have Advantage until your next turn.</div>
+    <div class="ft"><b>Feral Instinct</b>Advantage on Initiative.</div>
+    <div class="ft"><b>Instinctive Pounce</b>Move up to half your Speed when you enter your Rage.</div>
+    <div class="ft"><b>Fast Movement</b>+10 ft Speed — your Fly Speed rises with it.</div>
+    <div class="ft"><b>Extra Attack</b>Two attacks per Attack action — works in Beast form too.</div>
   </div></div>
 
-  <div class="card"><div class="ct">Fighter — Level 1</div><div class="cb">
-    <div class="ft"><b>Thrown Weapon Fighting</b>+2 damage on a ranged hit with a Thrown weapon — including Psychic Blades. Draw a Thrown weapon as part of the attack.</div>
-    <div class="ft"><b>Second Wind</b>Bonus Action to regain 1d10+1 HP. Two uses; one returns on a Short Rest.</div>
-    <div class="ft"><b>Weapon Mastery</b>Scimitar, Longbow, Heavy Crossbow. Swap on a Long Rest.</div>
-  </div></div>
-
-  <div class="card"><div class="ct">Halfling · Wayfarer</div><div class="cb">
-    <div class="ft"><b>Brave</b>Advantage on saves to avoid or end Frightened.</div>
-    <div class="ft"><b>Halfling Nimbleness</b>Move through the space of any larger creature; you can't stop there.</div>
-    <div class="ft"><b>Luck</b>Roll a 1 on a d20 test → reroll and use the new roll.</div>
-    <div class="ft"><b>Naturally Stealthy</b>Hide even when obscured only by a creature one size larger.</div>
-    <div class="ft"><b>Lucky (feat)</b>3 Luck Points. Spend 1 for Advantage on your own D20 Test, or Disadvantage on an attack against you.</div>
+  <div class="card"><div class="ct">Aarakocra &amp; Feats</div><div class="cb">
+    <div class="ft"><b>Flight</b>Fly Speed equals your walking speed (40 ft). Not usable in medium or heavy armor — and you lose it in Beast form.</div>
+    <div class="ft"><b>Talons</b>Unarmed strikes deal 1d6 + Str slashing.</div>
+    <div class="ft"><b>Wind Caller</b>Cast Gust of Wind once per Long Rest free, or with a 2nd-level druid slot. Wisdom, DC 14.</div>
+    <div class="ft"><b>Tough</b>+2 HP per level — +24 HP, already included in 131.</div>
+    <div class="ft"><b>Chef</b><span class="meta">SHORT REST</span>Cook a meal for up to 8 creatures; each regains an extra <b>1d8</b> HP when spending Hit Dice.
+      <span class="meta" style="margin-top:4px">LONG REST</span>Bake <b>4</b> treats; a creature eats one as a Bonus Action for <b>4</b> temp HP.</div>
   </div></div>
 </section>
 
@@ -348,28 +366,15 @@ section{display:none} section.on{display:block}
   <div class="card">
     <div class="ct">Magic Items<span class="spacer"></span><span class="dim" id="attn"></span></div>
     <div class="cb">
-      <div class="itm">
-        <div class="ih"><b>Bracers of Defense</b><span class="tag">Rare · Attunement</span></div>
-        <div class="idsc">+2 AC while wearing <b>no armor and no shield</b>. You understand and speak Elvish while wearing them.</div>
-        <button class="tog2" data-att="brac">Attune</button>
-      </div>
-      <div class="itm">
-        <div class="ih"><b>Stone of Good Luck</b><span class="tag">Uncommon · Attunement</span></div>
-        <div class="idsc">+1 to all ability checks and saving throws while on your person. Attuning here adds the +1 to the Stats tab.</div>
-        <button class="tog2" data-att="luck">Attune</button>
-      </div>
-      <div class="itm">
-        <div class="ih"><b>Gorig's "Spellbook"</b><span class="tag">Adventuring Gear</span></div>
-        <div class="idsc">Maroon silk body wraps, 23 ft, 20 lb. Works as a wizard's spellbook: acid splash, fear, blindness/deafness, false life, fire bolt, haste, magic missile, mirror image, ray of enfeeblement, ray of frost, ray of sickness, shield, shocking grasp.</div>
-      </div>
-      <div class="itm">
-        <div class="ih"><b>Indebted to Verthandantalynx</b><span class="tag">Story Award</span></div>
-        <div class="idsc">You owe a favour to the ancient green dragon Verthandantalynx. She will call it in at the worst possible moment.</div>
-      </div>
+      <div class="ft"><b>Shield, +1</b><span class="meta">NO ATTUNEMENT</span>+3 AC in total. Toggle it on the Play tab.</div>
+      <div class="ft"><b>Brooch of Shielding</b><span class="meta">UNCOMMON · ATTUNEMENT</span>Resistance to Force damage; immune to Magic Missile.
+        <div style="margin-top:6px"><button class="tog2" data-att="brooch">Attune</button></div></div>
+      <div class="ft"><b>Ring of Mind Shielding</b><span class="meta">UNCOMMON · ATTUNEMENT</span>Your thoughts, alignment and creature type can't be read magically, and you can lie undetectably.
+        <div style="margin-top:6px"><button class="tog2" data-att="ring">Attune</button></div></div>
+      <div class="ft"><b>Winged Boots</b><span class="meta">UNCOMMON · ATTUNEMENT</span>Fly Speed equal to your Speed, 4 hours per charge. Redundant with your wings — but may be your only flight in Beast form. Ask your DM whether worn items work through Wild Shape.
+        <div style="margin-top:6px"><button class="tog2" data-att="boots">Attune</button></div></div>
     </div>
   </div>
-
-  <div class="card"><div class="ct">Consumables</div><div class="cb" id="cons"></div></div>
 
   <div class="card"><div class="ct">Gold</div><div class="cb">
     <div class="gold">
@@ -381,27 +386,20 @@ section{display:none} section.on{display:block}
   </div></div>
 
   <div class="card"><div class="ct">Equipment</div><div class="cb">
-    <div class="r"><div class="k">Worn</div><div class="v">Studded Leather — AC 12 + Dex, no Stealth penalty</div></div>
-    <div class="r"><div class="k">Melee</div><div class="v">Scimitar · Dagger</div></div>
-    <div class="r"><div class="k">Ranged</div><div class="v">Longbow · Heavy Crossbow · Light Crossbow</div></div>
-    <div class="r"><div class="k">Ammo</div><div class="v">Arrows &amp; Quiver · Bolts &amp; Bolt Case</div></div>
-    <div class="r"><div class="k">Kit</div><div class="v">Thieves' Tools · Burglar's Pack</div></div>
+    <div class="r"><div class="k">Weapons</div><div class="v">Trident · Flail · Greatsword</div></div>
+    <div class="r"><div class="k">Farm kit</div><div class="v">Sickle, Iron Pot, Shovel, Healer's Kit, Carpenter's Tools, Traveler's Clothes</div></div>
+    <div class="r"><div class="k">Kitchen</div><div class="v">Cook's Utensils <span class="dim">(1 gp — required for Chef)</span></div></div>
   </div></div>
 
   <div class="card"><div class="ct">Proficiencies &amp; Languages</div><div class="cb">
-    <div class="r"><div class="k">Armor</div><div class="v">Light, Medium, Shields</div></div>
-    <div class="r"><div class="k">Weapons</div><div class="v">All Simple and Martial weapons</div></div>
-    <div class="r"><div class="k">Tools</div><div class="v">Thieves' Tools</div></div>
-    <div class="r"><div class="k">Langs</div><div class="v">Common · Halfling · Thieves' Cant · Undercommon · <span class="dim">(one slot open)</span></div></div>
-  </div></div>
-
-  <div class="card"><div class="ct">Burglar's Pack</div><div class="cb">
-    <div class="dim" style="font-size:12.5px">Backpack, Ball Bearings, Bell, 10 Candles, Crowbar, Hammer, 10 Pitons,
-    Hooded Lantern, 7 flasks of Oil, 10 days Rations, 50 ft Rope, Tinderbox, Waterskin.</div>
+    <div class="r"><div class="k">Armor</div><div class="v">Light, Medium, Shields <span class="dim">— medium armor disables flight</span></div></div>
+    <div class="r"><div class="k">Weapons</div><div class="v">Simple and Martial weapons</div></div>
+    <div class="r"><div class="k">Tools</div><div class="v">Carpenter's Tools · Cook's Utensils</div></div>
+    <div class="r"><div class="k">Langs</div><div class="v">Common · Auran · Draconic · Druidic</div></div>
   </div></div>
 
   <div class="card"><div class="ct">Notes</div><div class="cb">
-    <textarea class="note" id="notes" placeholder="Gold, loot, quest notes, NPCs…"></textarea>
+    <textarea class="note" id="notes" placeholder="Loot, quest notes, the eleven children…"></textarea>
   </div></div>
 
   <div class="card"><div class="ct">Data</div><div class="cb">
@@ -412,23 +410,141 @@ section{display:none} section.on{display:block}
   </div></div>
 </section>
 
+<!-- ============ SPELLS ============ -->
+<section id="spells">
+
+  <div class="warnbox"><b>You are one spell over the limit</b>
+    Druid 3 prepares <b>6</b> spells and you have <b>7</b> marked below. Circle spells (Cure Wounds, Moonbeam, Starry Wisp) and Find Familiar via Wild Companion are free and don't count. Drop one of the seven — <b>Spike Growth</b> is the usual cut, since holding its Concentration means not raging.</div>
+
+  <div class="card"><div class="ct">Spellcasting</div><div class="cb">
+    <div class="r"><div class="k">Ability</div><div class="v">Wisdom · Save <b>DC 14</b> · Attack <b>+6</b></div></div>
+    <div class="r"><div class="k">Slots</div><div class="v">4 × 1st · 2 × 2nd <span class="dim">— track on the Play tab</span></div></div>
+    <div class="r"><div class="k">Rage</div><div class="v"><b>No spellcasting and no Concentration while raging.</b> Cast before you Rage, or after it ends.</div></div>
+    <div class="r"><div class="k">Magician</div><div class="v">Add your Wisdom modifier to Arcana and Nature checks.</div></div>
+  </div></div>
+
+  <div class="card"><div class="ct">Cantrips · at will</div><div class="cb">
+    <div class="ft"><b>Starry Wisp</b><span class="meta">CIRCLE OF THE MOON · ACTION · 60 FT</span>
+      Ranged spell attack <b>+6</b>, <b>1d8 radiant</b>. The target sheds Dim Light in a 10-ft radius and can't benefit from the Invisible condition until the end of your next turn.</div>
+    <div class="ft"><b>Guidance</b><span class="meta">ACTION · TOUCH · <span class="conc">CONCENTRATION, 1 MIN</span></span>
+      The target adds <b>1d4</b> to one ability check of its choice. Dropped the moment you Rage.</div>
+    <div class="ft"><b>Druidcraft</b><span class="meta">ACTION · 30 FT</span>
+      Forecast weather, bloom a flower, light or snuff a small flame, or make a harmless sensory effect.</div>
+    <div class="ft"><b>Mending</b><span class="meta">1 MINUTE · TOUCH</span>
+      Repair a single break or tear in an object no larger than 1 foot.</div>
+  </div></div>
+
+  <div class="card"><div class="ct">Level 1 · 4 slots</div><div class="cb">
+    <div class="ft"><b>Cure Wounds</b><span class="meta">CIRCLE · ACTION · TOUCH</span>
+      Restore <b>2d8 + 2</b> HP. +2d8 per slot level above 1.</div>
+    <div class="ft"><b>Healing Word</b><span class="meta">BONUS ACTION · 60 FT</span>
+      Restore <b>2d4 + 2</b> HP. +2d4 per slot level above 1. Bonus Action — but you can't cast it while raging.</div>
+    <div class="ft"><b>Goodberry</b><span class="meta">ACTION · 24 HOURS</span>
+      Ten berries. Eating one as a Bonus Action restores <b>1</b> HP and feeds a creature for a day. Very much a mother's spell.</div>
+    <div class="ft"><b>Speak with Animals</b><span class="meta">ACTION OR RITUAL · 10 MIN</span>
+      Comprehend and speak with Beasts.</div>
+    <div class="ft"><b>Find Familiar</b><span class="meta">WILD COMPANION · 1 HOUR OR RITUAL</span>
+      Spend a spell slot <b>or a Wild Shape use</b> to cast it without Material components. The familiar is a <b>Fey</b> and disappears when you finish a Long Rest.
+      Choose a CR 0 Beast form. Telepathy and shared senses within 100 ft; it can't attack.</div>
+  </div></div>
+
+  <div class="card"><div class="ct">Level 2 · 2 slots</div><div class="cb">
+    <div class="ft"><b>Barkskin</b><span class="meta">BONUS ACTION · TOUCH · 1 HOUR · NO CONCENTRATION</span>
+      The target has <b>AC 17</b> if its AC is lower. Survives both Rage and Wild Shape — this is what lets you swing the greatsword without losing AC.</div>
+    <div class="ft"><b>Aid</b><span class="meta">ACTION · 30 FT · 8 HOURS · NO CONCENTRATION</span>
+      Three creatures each gain <b>+5</b> to their Hit Point maximum and current HP. +5 more per slot level above 2. Survives Rage and Wild Shape.</div>
+    <div class="ft"><b>Moonbeam</b><span class="meta">CIRCLE · ACTION · 120 FT · <span class="conc">CONCENTRATION, 1 MIN</span></span>
+      A 5-ft radius, 40-ft high cylinder of pale light. On entering or starting a turn there: Con save <b>DC 14</b>, <b>2d10 radiant</b>, half on a success. Bonus Action to move the beam 60 ft.</div>
+    <div class="ft"><b>Pass without Trace</b><span class="meta">ACTION · SELF 30 FT · <span class="conc">CONCENTRATION, 1 HR</span></span>
+      You and allies within 30 ft gain <b>+10</b> Stealth and can't be tracked except by magic.</div>
+    <div class="ft"><b>Spike Growth</b><span class="meta">ACTION · 150 FT · <span class="conc">CONCENTRATION, 10 MIN</span></span>
+      20-ft radius of spikes: difficult terrain, <b>2d4 piercing</b> per 5 ft a creature moves through it. Pairs beautifully with Branches of the Tree — but you can't hold it and Rage.</div>
+    <div class="ft"><b>Gust of Wind</b><span class="meta">AARAKOCRA · ACTION · SELF 60-FT LINE · <span class="conc">CONCENTRATION, 1 MIN</span></span>
+      Free once per Long Rest, or spend a 2nd-level slot. Str save DC 14 or be pushed 15 ft away.</div>
+  </div></div>
+
+</section>
+
+<!-- ============ FORMS ============ -->
+<section id="forms">
+
+  <div class="warnbox"><b>How Wild Shape works in 2024</b>
+    You <b>keep your own Hit Points</b> (131) — Beast form is no longer a second health bar. You gain <b>9 temporary HP</b> on transforming, your AC becomes <b>15</b> if the beast's is lower, and you keep your Int/Wis/Cha, class features (Rage, Extra Attack) and feats. You use the beast's Str/Dex/Con, speeds and senses — so you <b>lose your flight</b> in all four of these forms. Max CR 1; no flying forms until Druid 8. Lasts 1 hour.</div>
+
+  <div class="card"><div class="ct">Giant Spider · CR 1</div><div class="cb sb">
+    <div class="ty">Large Beast — climber and controller</div>
+    <div class="sbg">
+      <div>AC<b>15</b><span class="dim">beast 14</span></div>
+      <div>HP<b>131</b><span class="dim">yours</span></div>
+      <div>Speed<b>30</b><span class="dim">climb 30</span></div>
+    </div>
+    <div class="sbl"><span class="kk">Str/Dex/Con</span> 14 (+2) · 16 (+3) · 12 (+1)</div>
+    <div class="sbl"><span class="kk">Senses</span> Darkvision 60 ft · Perception +4 · Stealth +7</div>
+    <div class="sbl"><span class="kk">Bite</span> <b>+5</b> to hit, 1d8+3 piercing plus <b>2d6 poison</b></div>
+    <div class="sbl"><span class="kk">Web</span> Recharge 5–6, ranged 60 ft, Dex save <b>DC 13</b> or <b>Restrained</b>. The web has AC 10, 5 HP, vulnerable to fire, immune to poison and psychic.</div>
+    <div class="sbl"><span class="kk">Spider Climb</span> Climb difficult surfaces and ceilings with no check.</div>
+    <div class="sbl"><span class="kk">Web Walker</span> Ignores web movement restrictions; senses creatures touching the same web.</div>
+    <div class="sbl" style="color:var(--warn)"><span class="kk" style="color:var(--warn)">Rage</span> The bite is <b>Dexterity</b>-based, so your Rage damage bonus does <b>not</b> apply. You still get Rage's damage resistance.</div>
+  </div></div>
+
+  <div class="card"><div class="ct">Tiger · CR 1</div><div class="cb sb">
+    <div class="ty">Large Beast — your best fighting form</div>
+    <div class="sbg">
+      <div>AC<b>15</b><span class="dim">beast 13</span></div>
+      <div>HP<b>131</b><span class="dim">yours</span></div>
+      <div>Speed<b>40</b><span class="dim">ft</span></div>
+    </div>
+    <div class="sbl"><span class="kk">Str/Dex/Con</span> 17 (+3) · 16 (+3) · 14 (+2)</div>
+    <div class="sbl"><span class="kk">Senses</span> Darkvision 60 ft · Perception +3 · Stealth +7</div>
+    <div class="sbl"><span class="kk">Rend</span> <b>+5</b> to hit, reach 5 ft, <b>2d6+3 slashing</b>. If the target is Large or smaller it has the <b>Prone</b> condition.</div>
+    <div class="sbl"><span class="kk">Bonus Action</span> Nimble Escape — take the Disengage or Hide action.</div>
+    <div class="sbl" style="color:var(--good)"><span class="kk" style="color:var(--good)">Rage</span> Rend is <b>Strength</b>-based, so <b>+3 Rage damage applies</b>. With Extra Attack that's two Rends a turn, each knocking the target Prone.</div>
+  </div></div>
+
+  <div class="card"><div class="ct">Giant Toad · CR 1</div><div class="cb sb">
+    <div class="ty">Large Beast — grappler and swimmer</div>
+    <div class="sbg">
+      <div>AC<b>15</b><span class="dim">beast 11</span></div>
+      <div>HP<b>131</b><span class="dim">yours</span></div>
+      <div>Speed<b>30</b><span class="dim">swim 30</span></div>
+    </div>
+    <div class="sbl"><span class="kk">Str/Dex/Con</span> 15 (+2) · 13 (+1) · 13 (+1)</div>
+    <div class="sbl"><span class="kk">Senses</span> Darkvision 60 ft · Passive Perception 10</div>
+    <div class="sbl"><span class="kk">Bite</span> <b>+4</b> to hit, 1d6+2 piercing plus <b>2d4 poison</b>. A Medium or smaller target is <b>Grappled</b> (escape DC 12).</div>
+    <div class="sbl"><span class="kk">Swallow</span> Engulf a Grappled Medium or smaller creature: it is Blinded, Restrained, has total cover, and takes <b>3d6 acid</b> at the end of each of your turns. One at a time.</div>
+    <div class="sbl"><span class="kk">Amphibious</span> Breathes air and water. <span class="kk">Standing Leap</span> Long jump 20 ft, high jump 10 ft, no run-up.</div>
+    <div class="sbl" style="color:var(--good)"><span class="kk" style="color:var(--good)">Rage</span> The bite is <b>Strength</b>-based, so <b>+3 Rage damage applies</b>.</div>
+  </div></div>
+
+  <div class="card"><div class="ct">Cat · CR 0</div><div class="cb sb">
+    <div class="ty">Tiny Beast — scout, not a fighter</div>
+    <div class="sbg">
+      <div>AC<b>15</b><span class="dim">beast 12</span></div>
+      <div>HP<b>131</b><span class="dim">yours</span></div>
+      <div>Speed<b>40</b><span class="dim">climb 40</span></div>
+    </div>
+    <div class="sbl"><span class="kk">Str/Dex/Con</span> 3 (−4) · 15 (+2) · 10 (+0)</div>
+    <div class="sbl"><span class="kk">Senses</span> Darkvision 60 ft · Perception +3 · Stealth +4</div>
+    <div class="sbl"><span class="kk">Scratch</span> <b>+4</b> to hit, <b>1</b> slashing damage. Not a combat option.</div>
+    <div class="sbl"><span class="kk">Jumper</span> Jump distance uses Dexterity instead of Strength.</div>
+    <div class="sbl" style="color:var(--warn)"><span class="kk" style="color:var(--warn)">Note</span> Strength 3 — you can barely carry anything. This is for slipping through gaps, scouting and listening at doors, and you still have your own 131 HP if something notices you.</div>
+  </div></div>
+
+</section>
+
 </main>
 
 <script>
 (function(){
 "use strict";
-var KEY="zerio-zalik-v1";
-var MAXHP=60;
-var CAP={energy:6,luck:3,wind:2,hd8:7,hd10:1,ds:3,df:3};
+var KEY="saskia-v1";
+var MAXHP=131;
+var CAP={rage:4,ws:2,sl1:4,sl2:2,treat:4,gust:1,hd12:9,hd8:3,ds:3,df:3};
 
-var CONS=[["greater","Potion of Healing (Greater)","4d4+4 HP · uncommon"],
-          ["healing","Potion of Healing","2d4+2 HP · common"],
-          ["poisonres","Potion of Resistance (Poison)","Resistance to poison damage, 1 hr"],
-          ["heroism","Potion of Heroism","10 temp HP + Bless, 1 hr · rare"],
-          ["scroll","Spell Scroll: Find Familiar","Level 1 · common"]];
-var D={hp:MAXHP,thp:0,energy:6,luck:3,wind:2,hd8:7,hd10:1,ds:0,df:0,notes:"",theme:"dark",
-       gold:650, att:{brac:false,luck:false},
-       pot:{greater:1,healing:1,poisonres:1,heroism:1,scroll:1}};
+var D={hp:MAXHP,thp:0,rage:4,ws:2,sl1:4,sl2:2,treat:4,gust:1,hd12:9,hd8:3,
+       ds:0,df:0,notes:"",theme:"dark",gold:2000,conc:"",
+       raging:false,shield:true,bark:false,
+       att:{brooch:true,ring:true,boots:true}};
 var canStore=true;
 
 function load(){
@@ -445,38 +561,30 @@ function load(){
 }
 function save(){
   try{localStorage.setItem(KEY,JSON.stringify(D));}
-  catch(e){
-    canStore=false;
+  catch(e){canStore=false;
     var m=document.getElementById("stormsg");
-    if(m)m.textContent="Storage unavailable — changes won't persist here.";
-  }
+    if(m)m.textContent="Storage unavailable — changes won't persist here.";}
 }
 
-/* ---------- data ---------- */
-var ABIL=[["STR",8,-1],["DEX",18,4],["CON",14,2],["INT",13,1],["WIS",12,1],["CHA",12,1]];
-var SAVES=[["Strength",-1,0],["Dexterity",7,1],["Constitution",2,0],
-           ["Intelligence",4,1],["Wisdom",1,0],["Charisma",1,0]];
-var SKILLS=[["Acrobatics","Dex",10,20,2],["Insight","Wis",4,14,1],["Investigation","Int",4,14,1],
-            ["Perception","Wis",7,17,2],["Sleight of Hand","Dex",10,20,2],["Stealth","Dex",10,20,2],
-            ["Thieves' Tools","Dex",7,17,1]];
-/* name, atk, dmgDice, dmgBonus, dmgType, range, mastery */
+var ABIL=[["STR",18,4],["DEX",14,2],["CON",15,2],["INT",8,-1],["WIS",14,2],["CHA",9,-1]];
+var SAVES=[["Strength",8,1],["Dexterity",2,0],["Constitution",6,1],
+           ["Intelligence",-1,0],["Wisdom",2,0],["Charisma",-1,0]];
+var SKILLS=[["Athletics","Str",8,"Barbarian"],["Perception","Wis",6,"Primal Kn."],
+            ["Survival","Wis",6,"Barbarian"],["Animal Handling","Wis",6,"Farmer"],
+            ["Nature","Int",5,"Farmer +M"],["Arcana","Int",1,"Magician"]];
+/* name, normal dmg, raging dmg, notes */
 var ATK=[
- ["Psychic Blade",7,[[1,6]],4,"psychic","Melee 5 ft","Vex"],
- ["↳ thrown",7,[[1,6]],6,"psychic","60/120 ft","Vex"],
- ["↳ 2nd blade (BA)",7,[[1,4]],4,"psychic","melee · thr +2","Vex"],
- ["Dagger",7,[[1,4]],4,"piercing","Melee · 20/60","Nick"],
- ["Scimitar",7,[[1,6]],4,"slashing","Melee 5 ft","Nick"],
- ["Longbow",7,[[1,8]],4,"piercing","150/600 ft","Slow"],
- ["Heavy Crossbow",7,[[1,10]],4,"piercing","100/400 ft","Push"],
- ["Light Crossbow",7,[[1,8]],4,"piercing","80/320 ft","Slow"]
+ ["Trident 1H","1d8+4 piercing","1d8+7 piercing","Topple · works with the shield"],
+ ["↳ two-handed","1d10+4 piercing","1d10+7 piercing","Versatile"],
+ ["↳ thrown","1d8+4 piercing","1d8+7 piercing","20/60 ft — keeps Rage damage in the air"],
+ ["Flail","1d8+4 bludgeoning","1d8+7 bludgeoning","Sap · works with the shield"],
+ ["Greatsword","2d6+4 slashing","2d6+7 slashing","Graze · Heavy, Two-Handed — no shield"],
+ ["Talons","1d6+4 slashing","1d6+7 slashing","Unarmed — always available"]
 ];
 
-/* ---------- helpers ---------- */
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e;}
 function sgn(n){return (n>=0?"+":"")+n;}
-function die(f){return 1+Math.floor(Math.random()*f);}
 
-/* ---------- HP ---------- */
 function drawHP(){
   var pct=Math.max(0,Math.min(100,D.hp/MAXHP*100));
   var f=document.getElementById("fill");
@@ -493,22 +601,50 @@ function dmg(n){
 }
 function heal(n){D.hp=Math.min(MAXHP,D.hp+n);save();drawHP();}
 
-/* ---------- pips ---------- */
 function drawPips(id,key,cap,cls){
   var box=document.getElementById(id);box.innerHTML="";
   for(var i=0;i<cap;i++){
     (function(i){
       var b=el("button","pip"+(cls?" "+cls:"")+(i<D[key]?" f":""));
       b.onclick=function(){
-        D[key] = (D[key]===i+1) ? i : i+1;
+        D[key]=(D[key]===i+1)?i:i+1;
         save();drawPips(id,key,cap,cls);
       };
       box.appendChild(b);
     })(i);
   }
 }
+function drawAC(){
+  var ac=14+(D.shield?3:0);
+  if(D.bark&&ac<17)ac=17;
+  document.getElementById("acv").textContent=ac;
+  document.getElementById("shieldb").classList.toggle("on",D.shield);
+  document.getElementById("barkb").classList.toggle("on",D.bark);
+}
+function drawRage(){
+  var b=document.getElementById("ragebtn");
+  b.classList.toggle("on",D.raging);
+  b.textContent=D.raging?"RAGING — TAP TO END":"ENTER RAGE";
+  document.body.classList.toggle("raging",D.raging);
+  document.getElementById("ragetag").textContent=D.raging?"· RAGING":"";
+  document.getElementById("atkmode").textContent=D.raging?"raging +3":"";
+  document.getElementById("ragehint").innerHTML = D.raging
+    ? "+3 damage on Strength attacks · Resistance to bludgeoning, piercing, slashing · Advantage on Str checks and saves.<br>No spellcasting and no Concentration. Bonus Action to keep it going."
+    : "Bonus Action. Gain 9 temp HP and move half your Speed. Ends Concentration.";
+  drawAtks();
+}
+function drawAtks(){
+  var tb=document.getElementById("atks");tb.innerHTML="";
+  ATK.forEach(function(a){
+    var tr=el("tr");
+    tr.appendChild(el("td","w",a[0]));
+    tr.appendChild(el("td","dmg",D.raging?a[2]:a[1]));
+    tr.appendChild(el("td","mstr",a[3]));
+    tb.appendChild(tr);
+  });
+}
 function drawAtt(){
-  var n=(D.att.brac?1:0)+(D.att.luck?1:0);
+  var n=(D.att.brooch?1:0)+(D.att.ring?1:0)+(D.att.boots?1:0);
   document.getElementById("attn").textContent=n+" / 3 attuned";
   Array.prototype.forEach.call(document.querySelectorAll("[data-att]"),function(b){
     var on=!!D.att[b.getAttribute("data-att")];
@@ -516,34 +652,19 @@ function drawAtt(){
     b.textContent=on?"ATTUNED":"Attune";
   });
 }
-function drawCons(){
-  var box=document.getElementById("cons");box.innerHTML="";
-  CONS.forEach(function(c){
-    var row=el("div","cnt");
-    var nm=el("div","cn");nm.appendChild(document.createTextNode(c[1]));
-    nm.appendChild(el("small",null,c[2]));row.appendChild(nm);
-    var m=el("button","cbtn","−"), v=el("div","cv",String(D.pot[c[0]])), p=el("button","cbtn","+");
-    m.onclick=function(){D.pot[c[0]]=Math.max(0,D.pot[c[0]]-1);save();drawCons();};
-    p.onclick=function(){D.pot[c[0]]=Math.min(99,D.pot[c[0]]+1);save();drawCons();};
-    row.appendChild(m);row.appendChild(v);row.appendChild(p);
-    if(D.pot[c[0]]===0)row.style.opacity=".42";
-    box.appendChild(row);
-  });
-}
 function drawAll(){
-  drawAtt();drawCons();
-  drawPips("p_energy","energy",CAP.energy);
-  drawPips("p_luck","luck",CAP.luck,"gold");
-  drawPips("p_wind","wind",CAP.wind,"grn");
+  drawPips("p_rage","rage",CAP.rage,"org");
+  drawPips("p_ws","ws",CAP.ws,"grn");
+  drawPips("p_sl1","sl1",CAP.sl1);
+  drawPips("p_sl2","sl2",CAP.sl2);
+  drawPips("p_treat","treat",CAP.treat,"gold");
+  drawPips("p_gust","gust",CAP.gust,"gold");
+  drawPips("p_hd12","hd12",CAP.hd12);
   drawPips("p_hd8","hd8",CAP.hd8);
-  drawPips("p_hd10","hd10",CAP.hd10);
   drawPips("p_ds","ds",CAP.ds,"grn");
   drawPips("p_df","df",CAP.df);
-  drawHP();
+  drawHP();drawAC();drawAtt();drawRage();
 }
-
-
-/* ---------- build views ---------- */
 function build(){
   var g=document.getElementById("abg");
   ABIL.forEach(function(a){
@@ -553,63 +674,37 @@ function build(){
     c.appendChild(el("div","as",String(a[1])));
     g.appendChild(c);
   });
-
-  drawSaves();drawSkills();drawAtks();
-}
-function bonusAdj(){return D.att.luck?1:0;}
-function drawSaves(){
-  var adj=bonusAdj();
-  var sv=document.getElementById("saves");sv.innerHTML="";
+  var sv=document.getElementById("saves");
   SAVES.forEach(function(s){
     var r=el("div","r");
     r.appendChild(el("div","v",(s[2]?"● ":"○ ")+s[0]));
-    r.appendChild(el("div","num",sgn(s[1]+adj)));
+    r.appendChild(el("div","num",sgn(s[1])));
     sv.appendChild(r);
   });
-}
-function drawSkills(){
-  var adj=bonusAdj();
-  var sk=document.getElementById("skills");sk.innerHTML="";
+  var sk=document.getElementById("skills");
   SKILLS.forEach(function(s){
     var r=el("div","r");
-    r.appendChild(el("div","v",(s[4]===2?"◉ ":"● ")+s[0]+" "+'('+s[1]+')'));
-    r.appendChild(el("div","num",sgn(s[2]+adj)));
-    r.appendChild(el("div","min",String(s[3]+adj)));
+    r.appendChild(el("div","v","● "+s[0]+" ("+s[1]+")"));
+    r.appendChild(el("div","num",sgn(s[2])));
+    r.appendChild(el("div","src",s[3]));
     sk.appendChild(r);
   });
 }
-function drawAtks(){
-  var tb=document.getElementById("atks");if(tb.innerHTML)return;
-  ATK.forEach(function(a){
-    var tr=el("tr");
-    tr.appendChild(el("td","w",a[0]));
-    tr.appendChild(el("td",null,sgn(a[1])));
-    var dd=a[2].map(function(x){return x[0]+"d"+x[1];}).join("+")+sgn(a[3]);
-    tr.appendChild(el("td",null,dd));
-    tr.appendChild(el("td","rg",a[5]));
-    tr.appendChild(el("td","mstr",a[6]));
-    tb.appendChild(tr);
-  });
-}
 
-/* ---------- wire up ---------- */
 function init(){
   load();build();drawAll();
   document.documentElement.setAttribute("data-theme",D.theme==="light"?"light":"dark");
   document.getElementById("notes").value=D.notes||"";
+  document.getElementById("gold").value=D.gold;
+  document.getElementById("conc").value=D.conc||"";
   if(!canStore)document.getElementById("stormsg").textContent="Storage unavailable — changes won't persist here.";
 
   function amt(){var v=parseInt(document.getElementById("amt").value,10);return isNaN(v)||v<0?0:v;}
   document.getElementById("minus").onclick=function(){dmg(amt());};
   document.getElementById("plus").onclick=function(){heal(amt());};
-
   Array.prototype.forEach.call(document.querySelectorAll("[data-q]"),function(b){
-    b.onclick=function(){
-      var v=parseInt(b.getAttribute("data-q"),10);
-      if(v<0)dmg(-v); else heal(v);
-    };
+    b.onclick=function(){var v=parseInt(b.getAttribute("data-q"),10);if(v<0)dmg(-v);else heal(v);};
   });
-
   document.getElementById("sethpb").onclick=function(){
     var f=document.getElementById("sethp"),v=parseInt(f.value,10);
     if(!isNaN(v)){D.hp=Math.max(0,Math.min(MAXHP,v));save();drawHP();}
@@ -622,6 +717,22 @@ function init(){
   };
   document.getElementById("cleartmp").onclick=function(){D.thp=0;save();drawHP();};
 
+  document.getElementById("ragebtn").onclick=function(){
+    D.raging=!D.raging;
+    if(D.raging){
+      if(D.rage>0)D.rage--;
+      if(D.thp<9)D.thp=9;
+      D.conc="";document.getElementById("conc").value="";
+    }
+    save();drawAll();
+  };
+  document.getElementById("shieldb").onclick=function(){D.shield=!D.shield;save();drawAC();};
+  document.getElementById("barkb").onclick=function(){D.bark=!D.bark;save();drawAC();};
+
+  var cf=document.getElementById("conc");
+  cf.oninput=function(){D.conc=cf.value;save();};
+  document.getElementById("concclr").onclick=function(){D.conc="";cf.value="";save();};
+
   Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(b){
     b.onclick=function(){
       Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(x){x.classList.remove("on");});
@@ -632,17 +743,19 @@ function init(){
     };
   });
 
-
   document.getElementById("short").onclick=function(){
-    D.wind=Math.min(CAP.wind,D.wind+1);
+    D.rage=Math.min(CAP.rage,D.rage+1);
+    D.ws=Math.min(CAP.ws,D.ws+1);
     save();drawAll();
   };
   document.getElementById("long").onclick=function(){
-    D.hp=MAXHP;D.thp=0;D.energy=CAP.energy;D.luck=CAP.luck;D.wind=CAP.wind;D.ds=0;D.df=0;
-    var regain=4; /* half of 8 total Hit Dice */
-    while(regain>0&&(D.hd8<CAP.hd8||D.hd10<CAP.hd10)){
-      if(D.hd8<CAP.hd8){D.hd8++;regain--;}
-      else if(D.hd10<CAP.hd10){D.hd10++;regain--;}
+    D.hp=MAXHP;D.thp=0;D.rage=CAP.rage;D.ws=CAP.ws;D.sl1=CAP.sl1;D.sl2=CAP.sl2;
+    D.treat=CAP.treat;D.gust=CAP.gust;D.ds=0;D.df=0;D.raging=false;D.conc="";
+    document.getElementById("conc").value="";
+    var regain=6; /* half of 12 total Hit Dice */
+    while(regain>0&&(D.hd12<CAP.hd12||D.hd8<CAP.hd8)){
+      if(D.hd12<CAP.hd12){D.hd12++;regain--;}
+      else if(D.hd8<CAP.hd8){D.hd8++;regain--;}
     }
     save();drawAll();
   };
@@ -650,14 +763,13 @@ function init(){
   Array.prototype.forEach.call(document.querySelectorAll("[data-att]"),function(b){
     b.onclick=function(){
       var k=b.getAttribute("data-att");
-      var n=(D.att.brac?1:0)+(D.att.luck?1:0);
+      var n=(D.att.brooch?1:0)+(D.att.ring?1:0)+(D.att.boots?1:0);
       if(!D.att[k]&&n>=3){alert("You can attune to at most 3 items.");return;}
-      D.att[k]=!D.att[k];save();drawAtt();drawSaves();drawSkills();
+      D.att[k]=!D.att[k];save();drawAtt();
     };
   });
 
   var gf=document.getElementById("gold");
-  gf.value=D.gold;
   gf.oninput=function(){var v=parseInt(gf.value,10);D.gold=isNaN(v)?0:Math.max(0,v);save();};
   Array.prototype.forEach.call(document.querySelectorAll("[data-g]"),function(b){
     b.onclick=function(){
@@ -671,14 +783,15 @@ function init(){
 
   document.getElementById("theme").onclick=function(){
     D.theme=(D.theme==="light")?"dark":"light";
-    document.documentElement.setAttribute("data-theme",D.theme);
-    save();
+    document.documentElement.setAttribute("data-theme",D.theme);save();
   };
 
   document.getElementById("reset").onclick=function(){
-    if(!confirm("Reset HP and resources? Loot, gold and notes are kept."))return;
-    D.hp=MAXHP;D.thp=0;D.energy=CAP.energy;D.luck=CAP.luck;D.wind=CAP.wind;
-    D.hd8=CAP.hd8;D.hd10=CAP.hd10;D.ds=0;D.df=0;
+    if(!confirm("Reset HP and resources? Gold and notes are kept."))return;
+    D.hp=MAXHP;D.thp=0;D.rage=CAP.rage;D.ws=CAP.ws;D.sl1=CAP.sl1;D.sl2=CAP.sl2;
+    D.treat=CAP.treat;D.gust=CAP.gust;D.hd12=CAP.hd12;D.hd8=CAP.hd8;
+    D.ds=0;D.df=0;D.raging=false;D.conc="";
+    document.getElementById("conc").value="";
     save();drawAll();
   };
 
